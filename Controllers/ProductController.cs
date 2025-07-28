@@ -1,0 +1,77 @@
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using MedicalCharlesWembley.Data;
+using MedicalCharlesWembley.Models;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace MedicalCharlesWembley.Controllers
+{
+    public class ProductController : Controller
+    {
+        private readonly AppDbContext _context;
+
+        public ProductController(AppDbContext context)
+        {
+            _context = context;
+        }
+
+        [Route("san-pham")]
+        public async Task<IActionResult> Index(int page = 1, string searchTerm = null)
+        {
+            const int pageSize = 20; // 5 hàng x 4 sản phẩm = 20 sản phẩm mỗi trang
+
+            IQueryable<TProduct> query = _context.TProduct
+                .Where(p => p.Status == true);
+
+            // Nếu có từ khóa tìm kiếm, áp dụng bộ lọc
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                query = query.Where(p => p.Alias_Url.Contains(searchTerm) || 
+                                        _context.TProductDescription
+                                            .Where(pd => pd.ProductID == p.ProductID && pd.LanguageID == 1)
+                                            .Any(pd => pd.Name.Contains(searchTerm)));
+            }
+
+            // Tổng số sản phẩm
+            var totalProducts = await query.CountAsync();
+
+            // Lấy danh sách sản phẩm với phân trang
+            var products = await (from p in query
+                                  join pd in _context.TProductDescription on p.ProductID equals pd.ProductID
+                                  join pi in _context.TProductImage on p.ProductID equals pi.ProductID
+                                  where p.Status == true && pd.LanguageID == 1
+                                  select new
+                                  {
+                                      p.ProductID,
+                                      Name = pd.Name,
+                                      ImageLink = pi.ImageLink
+                                  })
+                                  .Skip((page - 1) * pageSize)
+                                  .Take(pageSize)
+                                  .ToListAsync();
+
+            // Tính tổng số trang
+            var totalPages = (int)Math.Ceiling(totalProducts / (double)pageSize);
+
+            // Truyền dữ liệu vào ViewBag
+            ViewBag.Products = products;
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPages = totalPages;
+            ViewBag.SearchTerm = searchTerm; // Lưu từ khóa tìm kiếm để hiển thị lại trong input
+
+            return View();
+        }
+
+        [HttpPost]
+        [Route("san-pham/search")]
+        public IActionResult Search(string searchTerm)
+        {
+            if (string.IsNullOrEmpty(searchTerm))
+            {
+                return RedirectToAction("Index", "Product");
+            }
+            return RedirectToAction("Index", "Product", new { searchTerm = searchTerm, page = 1 });
+        }
+    }
+}

@@ -1,0 +1,78 @@
+@{
+    ViewData["Title"] = "Hotline";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="title">TConfig list</div>
+<div class="hotline-toolbar">
+    <input type="text" class="form-control input-sm" placeholder="ConfigName" />
+    <button class="btn btn-primary btn-sm">Search</button>
+    <button class="btn btn-success btn-sm">Insert</button>
+</div>
+<table class="hotline-table">
+    <thead>
+        <tr>
+            <th>No.</th>
+            <th>Config Name</th>
+            <th>Config Value</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td>Hotline</td>
+            <td>0968360760</td>
+            <td><span class="action-btn"><i class="fa fa-pencil"></i></span></td>
+        </tr>
+    </tbody>
+</table>
+
+<style>
+    .hotline-toolbar {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 16px;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+    .hotline-toolbar .form-control {
+        width: 220px;
+        font-size: 15px;
+        padding: 4px 8px;
+    }
+    .hotline-toolbar .btn {
+        padding: 5px 14px;
+        font-size: 15px;
+        border-radius: 4px;
+    }
+    .hotline-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #f8fbff;
+        border-radius: 6px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+        font-size: 15px;
+    }
+    .hotline-table th, .hotline-table td {
+        padding: 10px 12px;
+        border-bottom: 1px solid #e0e7ef;
+        text-align: center;
+        vertical-align: middle;
+    }
+    .hotline-table th {
+        background: #e6eefa;
+        color: #003366;
+        font-weight: 600;
+    }
+    .action-btn {
+        cursor: pointer;
+        color: #0077b6;
+        font-size: 18px;
+        transition: color 0.2s;
+    }
+    .action-btn:hover {
+        color: #ff4500;
+    }
+</style>

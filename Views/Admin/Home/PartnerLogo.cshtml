@@ -1,0 +1,237 @@
+@{
+    ViewData["Title"] = "Logo đối tác";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="title">Quản lý Logo Đối tác</div>
+
+<form class="partnerlogo-form" method="post" asp-action="SavePartnerLogo" asp-controller="Admin" enctype="multipart/form-data">
+    <div class="form-row">
+        <label for="titleVN">Tiêu đề VN</label>
+        <input type="text" id="titleVN" name="titleVN" value="Đối tác của Chúng tôi" />
+    </div>
+    <div class="form-row">
+        <label for="titleEN">Tiêu đề EN</label>
+        <input type="text" id="titleEN" name="titleEN" value="Our Partners" />
+    </div>
+    <div class="form-row form-row-editor">
+        <label for="contentVN">Nội dung VN (Thêm/Chỉnh sửa Logo)</label>
+        <textarea id="contentVN" name="contentVN" class="editor-area"></textarea>
+    </div>
+    <div class="form-row">
+        <label for="newLogo">Thêm Logo Mới</label>
+        <input type="file" id="newLogo" name="newLogo" accept="image/*" />
+    </div>
+    <div class="form-row">
+        <label for="logoAlt">Alt Text</label>
+        <input type="text" id="logoAlt" name="logoAlt" placeholder="Mô tả logo" />
+    </div>
+    <div class="form-row">
+        <label for="logoOrder">Thứ tự</label>
+        <input type="number" id="logoOrder" name="logoOrder" value="0" min="0" />
+    </div>
+    <div class="form-actions">
+        <button type="button" class="btn btn-primary" id="addLogo">Thêm Logo</button>
+        <button type="submit" class="btn btn-success">Lưu Tất Cả</button>
+    </div>
+</form>
+
+<div class="logo-preview">
+    <div class="title">Danh sách Logo</div>
+    <div class="logo-list" id="logoList">
+        <!-- Dynamic logos will be inserted here -->
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: '#contentVN',
+            height: 320,
+            plugins: 'image link code media table imagetools',
+            toolbar: 'undo redo | formatselect | bold italic underline | alignleft aligncenter alignright | bullist numlist outdent indent | link image media table | forecolor backcolor | code',
+            content_style: 'body { font-family: Roboto, sans-serif; font-size: 15px; color: #333; } img { max-width: 100%; height: auto; max-height: 60px; }',
+            images_upload_url: '/admin/uploadimage',
+            images_upload_handler: function (blobInfo, success, failure) {
+                var formData = new FormData();
+                formData.append('file', blobInfo.blob(), blobInfo.filename());
+
+                fetch('/admin/uploadimage', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.location) {
+                        success(data.location);
+                        addLogoToPreview(data.location, document.getElementById('logoAlt').value || 'New Logo', document.getElementById('logoOrder').value || 0);
+                    } else {
+                        failure('Image upload failed');
+                    }
+                })
+                .catch(error => failure('Image upload failed: ' + error));
+            },
+            setup: function (editor) {
+                editor.on('init', function () {
+                    editor.setContent(`
+                        <p><img src="/wwwroot/images/partner1.png" alt="Masimo" style="height:60px;" /></p>
+                        <p><img src="/wwwroot/images/partner2.png" alt="Johnson&Johnson" style="height:60px;" /></p>
+                        <p><img src="/wwwroot/images/partner3.png" alt="Airon" style="height:60px;" /></p>
+                        <p><img src="/wwwroot/images/partner4.png" alt="Seca" style="height:60px;" /></p>
+                        <p><img src="/wwwroot/images/partner5.png" alt="Coltene" style="height:60px;" /></p>
+                    `);
+                });
+            }
+        });
+
+        // Function to add logo to preview
+        function addLogoToPreview(src, alt, order) {
+            const logoList = document.getElementById('logoList');
+            const logoDiv = document.createElement('div');
+            logoDiv.className = 'logo-item';
+            logoDiv.innerHTML = `
+                <img src="${src}" alt="${alt}" style="max-height: 60px; margin-right: 10px;" />
+                <span>Thứ tự: ${order}</span>
+                <span class="action-btn delete" onclick="this.parentElement.remove()">✖</span>
+            `;
+            logoList.appendChild(logoDiv);
+        }
+
+        // Add logo button click handler
+        document.getElementById('addLogo').addEventListener('click', function () {
+            const fileInput = document.getElementById('newLogo');
+            if (fileInput.files.length > 0) {
+                const formData = new FormData();
+                formData.append('file', fileInput.files[0]);
+                formData.append('alt', document.getElementById('logoAlt').value || 'New Logo');
+                formData.append('order', document.getElementById('logoOrder').value || 0);
+
+                fetch('/admin/uploadimage', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.location) {
+                        addLogoToPreview(data.location, document.getElementById('logoAlt').value || 'New Logo', document.getElementById('logoOrder').value || 0);
+                        fileInput.value = ''; // Clear file input
+                    }
+                })
+                .catch(error => console.error('Upload failed:', error));
+            } else {
+                alert('Vui lòng chọn một file hình ảnh!');
+            }
+        });
+
+        // Preload existing logos
+        document.querySelectorAll('#contentVN img').forEach(img => {
+            addLogoToPreview(img.src, img.alt, img.dataset.order || 0);
+        });
+    </script>
+}
+
+<style>
+    .partnerlogo-form {
+        background: #f8fbff;
+        border-radius: 6px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+        padding: 18px 24px 18px 24px;
+        margin-bottom: 24px;
+        max-width: 100%;
+    }
+    .partnerlogo-form .form-row {
+        display: flex;
+        align-items: center;
+        margin-bottom: 16px;
+    }
+    .partnerlogo-form .form-row label {
+        width: 160px;
+        font-weight: 500;
+        color: #003366;
+        margin-right: 12px;
+        flex-shrink: 0;
+    }
+    .partnerlogo-form .form-row input[type="text"],
+    .partnerlogo-form .form-row input[type="number"] {
+        flex: 1;
+        padding: 6px 10px;
+        border: 1px solid #b3c6e0;
+        border-radius: 4px;
+        font-size: 15px;
+        background: #fff;
+    }
+    .partnerlogo-form .form-row input[type="file"] {
+        flex: 1;
+        font-size: 15px;
+    }
+    .partnerlogo-form .form-row-editor {
+        align-items: flex-start;
+    }
+    .partnerlogo-form .editor-area {
+        display: none; /* Hidden as TinyMCE replaces it */
+    }
+    .partnerlogo-form .form-actions {
+        display: flex;
+        gap: 12px;
+        justify-content: flex-end;
+        margin-top: 10px;
+    }
+    .btn {
+        padding: 7px 18px;
+        border: none;
+        border-radius: 4px;
+        font-size: 15px;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+    .btn-primary {
+        background: #0077b6;
+        color: white;
+    }
+    .btn-primary:hover {
+        background: #005080;
+    }
+    .btn-success {
+        background: #28a745;
+        color: white;
+    }
+    .btn-success:hover {
+        background: #218838;
+    }
+    .logo-preview {
+        background: #f8fbff;
+        border-radius: 6px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+        padding: 18px 24px;
+        margin-top: 24px;
+    }
+    .logo-preview .title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #003366;
+        margin-bottom: 12px;
+    }
+    .logo-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+    .logo-item {
+        display: flex;
+        align-items: center;
+        background: #fff;
+        padding: 8px 12px;
+        border: 1px solid #e0e7ef;
+        border-radius: 4px;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    }
+    .logo-item .action-btn.delete {
+        margin-left: 10px;
+        color: #dc3545;
+        cursor: pointer;
+    }
+    .logo-item .action-btn.delete:hover {
+        color: #a71d2a;
+    }
+</style>

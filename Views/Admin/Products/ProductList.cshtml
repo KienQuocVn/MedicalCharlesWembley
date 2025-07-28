@@ -1,0 +1,153 @@
+@{
+    ViewData["Title"] = "Danh sách sản phẩm";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="title">Danh sách sản phẩm</div>
+
+<div class="productlist-toolbar">
+    <select class="form-select select-sm">
+        <option>Chọn trang</option>
+        <option>Trang 1</option>
+        <option>Trang 2</option>
+    </select>
+    <select class="form-select select-sm">
+        <option>Chọn nhóm sản phẩm</option>
+        <option>Nhóm 1</option>
+        <option>Nhóm 2</option>
+    </select>
+    <input type="text" class="form-control input-sm" placeholder="Tìm kiếm sản phẩm..." />
+    <button class="btn btn-primary btn-sm">Tìm</button>
+    <button class="btn btn-danger btn-sm">Xóa</button>
+    <button class="btn btn-success btn-sm">Tạo mới</button>
+</div>
+
+<table class="productlist-table">
+    <thead>
+        <tr>
+            <th><input type="checkbox" /></th>
+            <th>STT</th>
+            <th>Hình ảnh</th>
+            <th>Tên SP</th>
+            <th>Danh mục</th>
+            <th>Thứ tự</th>
+            <th>Giá bán lẻ</th>
+            <th>Trạng thái</th>
+            <th>Thông tin</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 1; i <= 10; i++) {
+        <tr>
+            <td><input type="checkbox" /></td>
+            <td>@i</td>
+            <td><img src="https://via.placeholder.com/48x48" alt="SP @i" class="product-img" /></td>
+            <td>Sản phẩm @i</td>
+            <td>Danh mục @((i % 3) + 1)</td>
+            <td>@i</td>
+            <td>0</td>
+            <td><span class="status @(i % 2 == 0 ? "active" : "inactive")">@(i % 2 == 0 ? "✔" : "✖")</span></td>
+            <td>01-01-2022</td>
+            <td>
+                <span class="action-btn" title="Sửa"><i class="fa fa-edit"></i></span>
+                <span class="action-btn" title="Xóa"><i class="fa fa-trash"></i></span>
+                <span class="action-btn" title="Xem"><i class="fa fa-eye"></i></span>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+
+<div class="productlist-pagination">
+    <button class="btn btn-light btn-sm">Trang đầu</button>
+    <button class="btn btn-light btn-sm">Trang sau</button>
+    <span>1</span>
+    <button class="btn btn-light btn-sm">2</button>
+    <button class="btn btn-light btn-sm">Trang trước</button>
+    <button class="btn btn-light btn-sm">Trang cuối</button>
+    <span class="ms-3">Có <b>50</b> sản phẩm</span>
+</div>
+
+<style>
+    .productlist-toolbar {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 16px;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+    .productlist-toolbar .form-select,
+    .productlist-toolbar .form-control {
+        width: 180px;
+        min-width: 120px;
+        font-size: 15px;
+        padding: 4px 8px;
+    }
+    .productlist-toolbar .input-sm {
+        width: 220px;
+    }
+    .productlist-toolbar .btn {
+        padding: 5px 14px;
+        font-size: 15px;
+        border-radius: 4px;
+    }
+    .productlist-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #f8fbff;
+        border-radius: 6px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+        font-size: 15px;
+    }
+    .productlist-table th, .productlist-table td {
+        padding: 8px 10px;
+        border-bottom: 1px solid #e0e7ef;
+        text-align: center;
+        vertical-align: middle;
+    }
+    .productlist-table th {
+        background: #e6eefa;
+        color: #003366;
+        font-weight: 600;
+    }
+    .product-img {
+        max-width: 48px;
+        max-height: 48px;
+        border-radius: 4px;
+        background: #fff;
+        border: 1px solid #e0e7ef;
+    }
+    .status.active {
+        color: #28a745;
+        font-weight: bold;
+    }
+    .status.inactive {
+        color: #dc3545;
+        font-weight: bold;
+    }
+    .action-btn {
+        cursor: pointer;
+        margin: 0 3px;
+        color: #0077b6;
+        font-size: 18px;
+        transition: color 0.2s;
+    }
+    .action-btn:hover {
+        color: #ff4500;
+    }
+    .productlist-pagination {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin-top: 18px;
+        font-size: 15px;
+    }
+    .productlist-pagination .btn {
+        padding: 4px 10px;
+        font-size: 15px;
+        border-radius: 4px;
+    }
+</style>
+

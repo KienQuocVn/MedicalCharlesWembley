@@ -1,0 +1,157 @@
+@{
+    ViewData["Title"] = "Quản lý đơn hàng";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="title">Danh sách giao dịch</div>
+<div class="order-toolbar">
+    <select class="form-select select-sm"><option>Chọn trạng thái</option></select>
+    <select class="form-select select-sm"><option>Chọn HTTT</option></select>
+    <select class="form-select select-sm"><option>Chọn tìm theo</option></select>
+    <input type="text" class="form-control input-sm" placeholder="" />
+    <button class="btn btn-primary btn-sm">Tìm kiếm</button>
+    <button class="btn btn-info btn-sm">Xuất Excell</button>
+</div>
+<div class="order-status-btns">
+    <button class="btn btn-status paid">Đã thanh toán</button>
+    <button class="btn btn-status delivered">Đã giao hàng</button>
+    <button class="btn btn-status cancel">Hủy đơn hàng</button>
+    <button class="btn btn-status invalid">Không hợp lệ</button>
+    <button class="btn btn-status unpaid">Chưa thanh toán</button>
+</div>
+<div class="order-summary">Có <b>2</b> đơn hàng được tìm thấy</div>
+<table class="order-table">
+    <thead>
+        <tr>
+            <th><input type="checkbox" /></th>
+            <th>ID<br/>Tổng tiền</th>
+            <th>Người nhận<br/>Điện thoại<br/>Email</th>
+            <th>Địa chỉ người nhận</th>
+            <th>Sản phẩm</th>
+            <th>Giá</th>
+            <th>S.Lg</th>
+            <th>Trạng thái HTTT</th>
+            <th>Ngày mua</th>
+            <th>Ghi chú</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><input type="checkbox" /></td>
+            <td>3<br/><b>900,000</b></td>
+            <td>tongnguyen<br/>0123456789<br/>tongnguyen2603@gmail.com</td>
+            <td>HCM</td>
+            <td>Berlin: Bàn mổ thủy lực</td>
+            <td>150,000</td>
+            <td>3</td>
+            <td>Chua_thanh_toan<br/>Chuyen_khoan</td>
+            <td>2021-09-15<br/>19:58</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" /></td>
+            <td>2<br/><b>450,000</b></td>
+            <td>tongnguyen<br/>0123456789<br/>tongnguyen2603@gmail.com</td>
+            <td>HCM</td>
+            <td>Berlin: Bàn mổ thủy lực</td>
+            <td>150,000</td>
+            <td>3</td>
+            <td>Chua_thanh_toan<br/>Giao_hang_nhan_tien</td>
+            <td>2021-09-15<br/>19:57</td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
+<div class="order-pagination">
+    <button class="btn btn-light btn-sm">[First]</button>
+    <button class="btn btn-light btn-sm">[Prev]</button>
+    <span>1</span>
+    <button class="btn btn-light btn-sm">[Next]</button>
+    <button class="btn btn-light btn-sm">[Last]</button>
+</div>
+
+<style>
+    .order-toolbar {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 12px;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+    .order-toolbar .form-select,
+    .order-toolbar .form-control {
+        width: 160px;
+        min-width: 100px;
+        font-size: 15px;
+        padding: 4px 8px;
+    }
+    .order-toolbar .input-sm {
+        width: 220px;
+    }
+    .order-toolbar .btn {
+        padding: 5px 14px;
+        font-size: 15px;
+        border-radius: 4px;
+    }
+    .order-status-btns {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 10px;
+        flex-wrap: wrap;
+    }
+    .btn-status {
+        padding: 7px 18px;
+        font-size: 15px;
+        border-radius: 4px;
+        font-weight: 500;
+        color: #fff;
+        border: none;
+        background: #0077b6;
+        transition: background 0.2s;
+    }
+    .btn-status.paid { background: #28a745; }
+    .btn-status.delivered { background: #17a2b8; }
+    .btn-status.cancel { background: #dc3545; }
+    .btn-status.invalid { background: #6c757d; }
+    .btn-status.unpaid { background: #0077b6; }
+    .btn-status:hover { opacity: 0.85; }
+    .order-summary {
+        margin-bottom: 6px;
+        font-size: 16px;
+        font-weight: 500;
+    }
+    .order-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #f8fbff;
+        border-radius: 6px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+        font-size: 15px;
+    }
+    .order-table th, .order-table td {
+        padding: 8px 10px;
+        border-bottom: 1px solid #e0e7ef;
+        text-align: center;
+        vertical-align: middle;
+    }
+    .order-table th {
+        background: #e6eefa;
+        color: #003366;
+        font-weight: 600;
+    }
+    .order-pagination {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin-top: 18px;
+        font-size: 15px;
+    }
+    .order-pagination .btn {
+        padding: 4px 10px;
+        font-size: 15px;
+        border-radius: 4px;
+    }
+    
+</style>
+

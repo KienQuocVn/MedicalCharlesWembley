@@ -1,0 +1,65 @@
+@{
+    ViewData["Title"] = "Upload file sitemap.xml to Root";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="title">Upload file sitemap.xml to Root</div>
+<form class="sitemap-form" method="post" enctype="multipart/form-data">
+    <div class="form-row">
+        <label for="fileUpload">Chọn file update:</label>
+        <input type="file" id="fileUpload" name="fileUpload" />
+        <button type="submit" class="btn btn-primary">Upload</button>
+    </div>
+    <div class="form-note">
+        <span class="note">Nếu là file .zip sẽ tự giải nén file (đừng để update source)</span>
+    </div>
+</form>
+
+<style>
+    .sitemap-form {
+        background: #f8fbff;
+        border-radius: 6px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+        padding: 18px 24px 18px 24px;
+        margin-bottom: 24px;
+        max-width: 100%;
+    }
+    .sitemap-form .form-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+    .sitemap-form label {
+        font-weight: 500;
+        color: #003366;
+        min-width: 140px;
+    }
+    .sitemap-form input[type="file"] {
+        font-size: 15px;
+    }
+    .btn {
+        padding: 7px 18px;
+        font-size: 15px;
+        border-radius: 4px;
+        font-weight: 500;
+        border: none;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+    .btn-primary {
+        background: #0077b6;
+        color: #fff;
+    }
+    .btn-primary:hover {
+        background: #005080;
+    }
+    .form-note {
+        margin-top: 4px;
+    }
+    .form-note .note {
+        color: #e67e22;
+        font-size: 15px;
+        font-style: italic;
+    }
+</style>

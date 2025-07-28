@@ -1,0 +1,129 @@
+@{
+    ViewData["Title"] = "NewsLetter";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="title">NewsLetter</div>
+<div class="newsletter-toolbar">
+    <label for="search">Tìm kiếm:</label>
+    <input type="text" id="search" class="form-control input-sm" placeholder="" />
+    <button class="btn btn-primary btn-sm">Tìm</button>
+    <button class="btn btn-danger btn-sm">Xóa</button>
+    <button class="btn btn-info btn-sm">Xuất file excel</button>
+</div>
+<table class="newsletter-table">
+    <thead>
+        <tr>
+            <th><input type="checkbox" /></th>
+            <th>STT</th>
+            <th>Email</th>
+            <th>Ngày đăng ký</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><input type="checkbox" /></td>
+            <td>1</td>
+            <td>sample@email.tst</td>
+            <td>21/11/2024</td>
+            <td><span class="action-btn delete"><i class="fa fa-times"></i></span></td>
+        </tr>
+        @for (int i = 2; i <= 10; i++) {
+        <tr>
+            <td><input type="checkbox" /></td>
+            <td>@i</td>
+            <td>p_email</td>
+            <td>20/11/2024</td>
+            <td><span class="action-btn delete"><i class="fa fa-times"></i></span></td>
+        </tr>
+        }
+    </tbody>
+</table>
+<div class="newsletter-pagination">
+    <span class="page-arrow">&#171;</span>
+    <span class="page-arrow">&#60;</span>
+    <span class="page-num active">1</span>
+    <span class="page-num">2</span>
+    <span class="page-num">3</span>
+    <span class="page-num">4</span>
+    <span class="page-arrow">&#62;</span>
+    <span class="page-arrow">&#187;</span>
+</div>
+
+<style>
+    .newsletter-toolbar {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 16px;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+    .newsletter-toolbar .form-control {
+        width: 220px;
+        font-size: 15px;
+        padding: 4px 8px;
+    }
+    .newsletter-toolbar .btn {
+        padding: 5px 14px;
+        font-size: 15px;
+        border-radius: 4px;
+    }
+    .newsletter-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #f8fbff;
+        border-radius: 6px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+        font-size: 15px;
+    }
+    .newsletter-table th, .newsletter-table td {
+        padding: 10px 12px;
+        border-bottom: 1px solid #e0e7ef;
+        text-align: center;
+        vertical-align: middle;
+    }
+    .newsletter-table th {
+        background: #e6eefa;
+        color: #003366;
+        font-weight: 600;
+    }
+    .action-btn.delete {
+        color: #dc3545;
+        font-size: 18px;
+        cursor: pointer;
+        transition: color 0.2s;
+    }
+    .action-btn.delete:hover {
+        color: #a71d2a;
+    }
+    .newsletter-pagination {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        margin-top: 18px;
+        font-size: 16px;
+        justify-content: center;
+    }
+    .newsletter-pagination .page-arrow {
+        color: #0077b6;
+        cursor: pointer;
+        padding: 0 4px;
+        font-size: 18px;
+    }
+    .newsletter-pagination .page-num {
+        color: #003366;
+        background: #e6eefa;
+        border-radius: 3px;
+        padding: 2px 8px;
+        margin: 0 2px;
+        cursor: pointer;
+    }
+    .newsletter-pagination .page-num.active {
+        background: #0077b6;
+        color: #fff;
+        font-weight: bold;
+    }
+    
+</style>

@@ -1,0 +1,204 @@
+@{
+    ViewData["Title"] = "Tin tức - sự kiện";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="title">Danh sách bài viết</div>
+<div class="news-toolbar">
+    <label for="statusFilter">Tìm kiếm:</label>
+    <select id="statusFilter" class="form-select select-sm">
+        <option>Chọn trạng thái</option>
+        <option>Hiện</option>
+        <option>Ẩn</option>
+    </select>
+    <select class="form-select select-sm">
+        <option>All</option>
+        <option>Tin tức & sự kiện</option>
+    </select>
+    <input type="text" class="form-control input-sm" placeholder="" />
+    <button class="btn btn-primary btn-sm">Tìm</button>
+    <button class="btn btn-info btn-sm">Hiện tin</button>
+    <button class="btn btn-danger btn-sm">Xóa</button>
+    <button class="btn btn-success btn-sm">Tạo mới</button>
+</div>
+<table class="news-table">
+    <thead>
+        <tr>
+            <th><input type="checkbox" /></th>
+            <th>STT</th>
+            <th>Tiêu đề</th>
+            <th>Danh mục</th>
+            <th>Ngày tạo</th>
+            <th>Trạng thái</th>
+            <th>Thứ tự</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><input type="checkbox" /></td>
+            <td>1</td>
+            <td><a href="#">» Ứng dụng theo dõi độ mê trong phẫu thuật ghép thận tại Bệnh Viện Nhi Đồng 2</a></td>
+            <td>Tin tức & sự kiện</td>
+            <td>2024-04-16</td>
+            <td>Hiện</td>
+            <td>1</td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" /></td>
+            <td>2</td>
+            <td><a href="#">» Lễ Khánh thành TÒA NHÀ KHU CHẨN ĐOÁN VÀ ĐIỀU TRỊ KỸ THUẬT CAO tại Bệnh viện Nhân Dân 115 ngày 15/02/2023</a></td>
+            <td>Tin tức & sự kiện</td>
+            <td>2023-02-14</td>
+            <td>Hiện</td>
+            <td>100</td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" /></td>
+            <td>3</td>
+            <td><a href="#">» Tuyển dụng: Sales Admin</a></td>
+            <td>Tin tức & sự kiện</td>
+            <td>2022-05-19</td>
+            <td>Hiện</td>
+            <td>100</td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" /></td>
+            <td>4</td>
+            <td><a href="#">» Chăm sóc vết thương (phần 1): Cơ bản</a></td>
+            <td>Tin tức & sự kiện</td>
+            <td>2022-04-18</td>
+            <td>Ẩn</td>
+            <td>100</td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" /></td>
+            <td>5</td>
+            <td><a href="#">» Chăm sóc vết thương (phần 1): Cơ bản</a></td>
+            <td>Tin tức & sự kiện</td>
+            <td>2022-04-18</td>
+            <td>Hiện</td>
+            <td>100</td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" /></td>
+            <td>6</td>
+            <td><a href="#">» Ứng dụng điện thế gọi thị giác (VEP) và điện thế võng mạc (ERG) vào chẩn đoán</a></td>
+            <td>Tin tức & sự kiện</td>
+            <td>2022-04-05</td>
+            <td>Ẩn</td>
+            <td>100</td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" /></td>
+            <td>7</td>
+            <td><a href="#">» RETeval® - Thiết bị ERG chuyên dụng chẩn đoán các bệnh lý thị giác</a></td>
+            <td>Tin tức & sự kiện</td>
+            <td>2022-03-30</td>
+            <td>Ẩn</td>
+            <td>100</td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" /></td>
+            <td>8</td>
+            <td><a href="#">» Website mới của Charles Wembley chính thức ra mắt!</a></td>
+            <td>Tin tức & sự kiện</td>
+            <td>2022-03-23</td>
+            <td>Hiện</td>
+            <td>100</td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" /></td>
+            <td>9</td>
+            <td><a href="#">» Triển lãm Quốc tế chuyên ngành Y Dược thường niên lần thứ 17 tại TP Hồ Chí Minh</a></td>
+            <td>Tin tức & sự kiện</td>
+            <td>2022-01-11</td>
+            <td>Hiện</td>
+            <td>100</td>
+        </tr>
+        <tr>
+            <td><input type="checkbox" /></td>
+            <td>10</td>
+            <td><a href="#">» Tiễn sĩ Charlie Tan – giám đốc công ty Charles Wembley Asia (Singapore)</a></td>
+            <td>Tin tức & sự kiện</td>
+            <td>2022-01-07</td>
+            <td>Hiện</td>
+            <td>100</td>
+        </tr>
+    </tbody>
+</table>
+<div class="news-pagination">
+    <button class="btn btn-light btn-sm">[First]</button>
+    <button class="btn btn-light btn-sm">[Prev]</button>
+    <span>1</span>
+    <button class="btn btn-light btn-sm">[Next]</button>
+    <button class="btn btn-light btn-sm">[Last]</button>
+    <span class="ms-3">1 /1 Page</span>
+    <button class="btn btn-info btn-sm">Move</button>
+</div>
+
+<style>
+    .news-toolbar {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 16px;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+    .news-toolbar .form-select,
+    .news-toolbar .form-control {
+        width: 160px;
+        min-width: 100px;
+        font-size: 15px;
+        padding: 4px 8px;
+    }
+    .news-toolbar .input-sm {
+        width: 220px;
+    }
+    .news-toolbar .btn {
+        padding: 5px 14px;
+        font-size: 15px;
+        border-radius: 4px;
+    }
+    .news-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #f8fbff;
+        border-radius: 6px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+        font-size: 15px;
+    }
+    .news-table th, .news-table td {
+        padding: 10px 12px;
+        border-bottom: 1px solid #e0e7ef;
+        text-align: center;
+        vertical-align: middle;
+    }
+    .news-table th {
+        background: #e6eefa;
+        color: #003366;
+        font-weight: 600;
+    }
+    .news-table td a {
+        color: #003366;
+        text-decoration: none;
+        font-weight: 500;
+    }
+    .news-table td a:hover {
+        color: #0077b6;
+        text-decoration: underline;
+    }
+    .news-pagination {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin-top: 18px;
+        font-size: 15px;
+    }
+    .news-pagination .btn {
+        padding: 4px 10px;
+        font-size: 15px;
+        border-radius: 4px;
+    }
+    
+</style>

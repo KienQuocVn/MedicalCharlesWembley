@@ -1,0 +1,111 @@
+@{
+    ViewData["Title"] = "TConfig list";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="title">TConfig list</div>
+<div class="categorybanner-toolbar">
+    <input type="text" class="form-control input-sm" placeholder="ConfigName" />
+    <button class="btn btn-primary btn-sm">Search</button>
+    <button class="btn btn-success btn-sm">Insert</button>
+</div>
+<table class="categorybanner-table">
+    <thead>
+        <tr>
+            <th>No.</th>
+            <th>Config Name</th>
+            <th>Config Value</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td>Menu 1 (.jpg) size:420 x 376</td>
+            <td><img src="https://via.placeholder.com/120x90" alt="Menu 1" class="banner-img" /></td>
+            <td><span class="action-btn"><i class="fa fa-pencil"></i></span></td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Menu 2 (.jpg) size:420 x 376</td>
+            <td><img src="https://via.placeholder.com/120x90" alt="Menu 2" class="banner-img" /></td>
+            <td><span class="action-btn"><i class="fa fa-pencil"></i></span></td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>Menu 3 (.jpg) size:420 x 376</td>
+            <td><img src="https://via.placeholder.com/120x90" alt="Menu 3" class="banner-img" /></td>
+            <td><span class="action-btn"><i class="fa fa-pencil"></i></span></td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>Menu 4 (.jpg) size:420 x 376</td>
+            <td><img src="https://via.placeholder.com/120x90" alt="Menu 4" class="banner-img" /></td>
+            <td><span class="action-btn"><i class="fa fa-pencil"></i></span></td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td>Menu 5 (.jpg) size:420 x 376</td>
+            <td><img src="https://via.placeholder.com/120x90" alt="Menu 5" class="banner-img" /></td>
+            <td><span class="action-btn"><i class="fa fa-pencil"></i></span></td>
+        </tr>
+    </tbody>
+</table>
+
+<style>
+    .categorybanner-toolbar {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 16px;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+    .categorybanner-toolbar .form-control {
+        width: 220px;
+        font-size: 15px;
+        padding: 4px 8px;
+    }
+    .categorybanner-toolbar .btn {
+        padding: 5px 14px;
+        font-size: 15px;
+        border-radius: 4px;
+    }
+    .categorybanner-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #f8fbff;
+        border-radius: 6px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+        font-size: 15px;
+    }
+    .categorybanner-table th, .categorybanner-table td {
+        padding: 10px 12px;
+        border-bottom: 1px solid #e0e7ef;
+        text-align: center;
+        vertical-align: middle;
+    }
+    .categorybanner-table th {
+        background: #e6eefa;
+        color: #003366;
+        font-weight: 600;
+    }
+    .banner-img {
+        max-width: 120px;
+        max-height: 90px;
+        border-radius: 4px;
+        background: #fff;
+        border: 1px solid #e0e7ef;
+    }
+    .action-btn {
+        cursor: pointer;
+        color: #0077b6;
+        font-size: 18px;
+        transition: color 0.2s;
+    }
+    .action-btn:hover {
+        color: #ff4500;
+    }
+    
+</style>
+

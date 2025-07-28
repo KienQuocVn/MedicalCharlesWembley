@@ -1,0 +1,131 @@
+@{
+    ViewData["Title"] = "Giới thiệu";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="title">TConfig list</div>
+
+<div class="search-bar">
+    <div>
+        <input type="text" placeholder="Tìm kiếm TConfig..." />
+        <button>Search</button>
+    </div>
+    <button class="btn-add">Thêm mới</button>
+</div>
+
+<table class="data-table">
+    <thead>
+        <tr>
+            <th>STT</th>
+            <th>Tên Config</th>
+            <th>Giá trị</th>
+            <th>Trạng thái</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td>Giới thiệu tiêu đề VN</td>
+            <td>Chào mừng đến với MedicalCharlesWembley</td>
+            <td><span class="status active">Hoạt động</span></td>
+            <td>
+                <span class="action-btn">✎</span>
+                <span class="action-btn delete">✖</span>
+            </td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>Giới thiệu mô tả EN</td>
+            <td>Welcome to MedicalCharlesWembley - Your Health Partner</td>
+            <td><span class="status active">Hoạt động</span></td>
+            <td>
+                <span class="action-btn">✎</span>
+                <span class="action-btn delete">✖</span>
+            </td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>Hình ảnh giới thiệu</td>
+            <td><img src="https://via.placeholder.com/150x80" alt="About Image" class="table-image" /></td>
+            <td><span class="status inactive">Tạm ẩn</span></td>
+            <td>
+                <span class="action-btn">✎</span>
+                <span class="action-btn delete">✖</span>
+            </td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>Liên kết video</td>
+            <td>https://youtube.com/watch?v=example</td>
+            <td><span class="status active">Hoạt động</span></td>
+            <td>
+                <span class="action-btn">✎</span>
+                <span class="action-btn delete">✖</span>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<style>
+    .data-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #f8fbff;
+        border-radius: 6px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+        margin-top: 20px;
+    }
+    .data-table th, .data-table td {
+        padding: 12px 14px;
+        border-bottom: 1px solid #e0e7ef;
+        text-align: left;
+        font-size: 15px;
+    }
+    .data-table th {
+        background: #e6eefa;
+        color: #003366;
+        font-weight: 600;
+    }
+    .table-image {
+        max-width: 150px;
+        max-height: 80px;
+        border-radius: 4px;
+        background: #fff;
+        border: 1px solid #e0e7ef;
+    }
+    .status {
+        padding: 4px 10px;
+        border-radius: 12px;
+        font-size: 14px;
+    }
+    .status.active {
+        background: #d4edda;
+        color: #155724;
+    }
+    .status.inactive {
+        background: #f8d7da;
+        color: #721c24;
+    }
+    .action-btn.delete {
+        margin-left: 10px;
+        color: #dc3545;
+    }
+    .action-btn.delete:hover {
+        color: #a71d2a;
+    }
+    .btn-add {
+        padding: 7px 18px;
+        background: #0077b6;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-size: 15px;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+    .btn-add:hover {
+        background: #005080;
+    }
+</style>

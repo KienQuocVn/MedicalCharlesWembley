@@ -1,0 +1,319 @@
+.header-banner img {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    object-fit: cover;
+    max-height: 550px;
+}
+
+.intro-section{
+  background-color: #eeeef0;
+}
+
+
+/* Đối tác */
+.partners-section .splide__list {
+    display: flex;
+    gap: 16px; /* Khoảng cách giữa các logo, bạn có thể tăng lên nếu muốn */
+    padding: 0 10px; /* Đệm trái phải để tránh dính sát lề */
+}
+
+.partners-section .splide__slide {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    height: 100px;
+    min-width: 220px; 
+    box-sizing: border-box;
+}
+
+.partners-section .splide__slide img {
+    width: 200px;
+    height: 66px;
+    object-fit: contain;
+    opacity: 0.7;
+    transition: 0.3s ease;
+}
+
+.partners-section .splide__slide img:hover {
+    opacity: 1;
+    filter: none;
+}
+  
+  
+  
+/* PRoduct */
+.products-section {
+    background-color: #f9f9f9;
+    padding: 2rem 0;
+  }
+  
+  .product-group {
+    margin-bottom: 2rem;
+    opacity: 0;
+    transform: scale(0.9);
+    transition: all 0.6s ease-out;
+  }
+  .product-group.animate {
+    opacity: 1;
+    transform: scale(1);
+  }
+  .product-group h5 {
+    font-weight: bold;
+    background-color: #6c757d;
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    display: inline-block;
+  }
+  
+  .product-group a.text-primary {
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+  
+  .product-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .product-card-link {
+    text-decoration: none;
+    color: inherit;
+    flex: 1 1 calc(20% - 16px); /* 5 sản phẩm trên 1 hàng */
+    max-width: calc(20% - 16px);
+    min-width: 200px;
+  }
+  
+  .product-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: center;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: box-shadow 0.3s ease;
+  }
+  
+  .product-image {
+    height: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+  
+  .product-image img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+  }
+  
+  .product-card:hover .product-image img {
+    transform: scale(1.05);
+  }
+  
+  .product-title {
+    font-size: 1rem;
+    color: #333;
+    margin: 0;
+    padding: 0 0.5rem;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+  }
+  
+  .product-card:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  @media (max-width: 1199px) {
+    .product-card-link {
+      flex: 1 1 calc(25% - 16px); /* 4 sp/hàng */
+    }
+  }
+  
+  @media (max-width: 991px) {
+    .product-card-link {
+      flex: 1 1 calc(33.333% - 16px); /* 3 sp/hàng */
+    }
+  }
+  
+  @media (max-width: 767px) {
+    .product-card-link {
+      flex: 1 1 calc(50% - 16px); /* 2 sp/hàng */
+    }
+  
+    .product-image {
+      height: 180px;
+    }
+  
+    .product-title {
+      font-size: 0.95rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .product-card-link {
+      flex: 1 1 100%; /* 1 sp/hàng */
+    }
+  }
+  
+
+/* DỊCH VỤ - HẬU MÃI */
+.bg-service {
+    background-color: #ebebeb;
+    padding: 40px 0 0 0;
+    border-bottom: 1px solid #d1d1d1;
+}
+
+.bg-service h3 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 2.5rem;
+}
+
+.bg-service .row {
+    border-top: none;
+    border-bottom: none;
+}
+
+.bg-service .col-md-6 {
+    border-right: 1px solid #d1d1d1;
+    padding: 40px 40px 40px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bg-service .col-md-6:last-child {
+    border-right: none;
+    padding-left: 40px;
+    padding-right: 0;
+}
+
+.bg-service .d-flex {
+    align-items: flex-start;
+}
+
+.bg-service img {
+    width: 90px;
+    height: 90px;
+    object-fit: contain;
+    margin-right: 32px;
+}
+
+.bg-service h5 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.bg-service p {
+    font-size: 1.1rem;
+    color: #222;
+    margin-bottom: 1.5rem;
+}
+
+.custom-btn {
+    display: inline-block;
+    background: #222;
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 400;
+    padding: 0.6rem 2.2rem;
+    border-radius: 0;
+    border: none;
+    text-decoration: none;
+    position: relative;
+    transition: background 0.2s;
+    clip-path: polygon(10% 0, 90% 0, 100% 50%, 90% 100%, 10% 100%, 0 50%);
+    box-shadow: 2px 2px 0 #444;
+}
+
+.custom-btn:hover {
+    background: #444;
+    color: #fff;
+    text-decoration: none;
+}
+
+@media (max-width: 991.98px) {
+    .bg-service .col-md-6,
+    .bg-service .col-md-6:last-child {
+        border-right: none;
+        padding: 30px 0;
+    }
+    .bg-service .row {
+        flex-direction: column;
+    }
+    .bg-service img {
+        margin-bottom: 20px;
+        margin-right: 0;
+    }
+}
+  
+  
+/* Khách hàng (carousel) */
+.customers-section .splide__list {
+    display: flex;
+    gap: 16px;
+    padding: 0 10px;
+}
+
+.customers-section .splide__slide {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    height: 120px;
+    min-width: 220px;
+    box-sizing: border-box;
+}
+
+.customers-section .splide__slide img {
+    width: 180px;
+    height: 80px;
+    object-fit: contain;
+    opacity: 0.85;
+    transition: 0.3s ease;
+}
+
+.customers-section .splide__slide img:hover {
+    opacity: 1;
+    filter: none;
+}
+
+.customers-section h4, .customers-section h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 2.5rem;
+    text-align: center;
+}
+
+@media (max-width: 991.98px) {
+    .customers-section .splide__slide {
+        height: 90px;
+        min-width: 140px;
+    }
+    .customers-section .splide__slide img {
+        width: 120px;
+        height: 50px;
+    }
+    .customers-section h4, .customers-section h2 {
+        font-size: 1.5rem;
+    }
+}
+  
+  

@@ -1,0 +1,134 @@
+@{
+    ViewData["Title"] = "Thông tin liên hệ";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="title">Nội dung</div>
+<div class="category-page">
+    <div class="category-tree">
+        <ul>
+            <li><input type="checkbox" /> Trụ sở chính</li>
+            <li><input type="checkbox" /> Văn phòng Hà Nội</li>
+            <li><input type="checkbox" /> Văn phòng Đà Nẵng</li>
+        </ul>
+    </div>
+    <form class="category-form" method="post" enctype="multipart/form-data">
+        <div class="form-actions-top">
+            <button type="button" class="btn btn-danger">Xóa</button>
+            <button type="button" class="btn btn-primary">Tạo mới</button>
+            <button type="submit" class="btn btn-success">Lưu</button>
+        </div>
+        <div class="form-row">
+            <label>Hiển thị</label>
+            <label><input type="radio" name="status" checked /> Yes</label>
+            <label><input type="radio" name="status" /> No</label>
+        </div>
+        <div class="form-row"><label>Thứ tự</label><input type="number" value="0" /></div>
+        <div class="form-row"><label>Tiêu đề VN</label><input type="text" /></div>
+        <div class="form-row"><label>Tiêu đề EN</label><input type="text" /></div>
+        <div class="form-row"><label>Mô tả VN</label><textarea rows="2"></textarea></div>
+        <div class="form-row"><label>Mô tả EN</label><textarea rows="2"></textarea></div>
+        <div class="form-row form-row-editor">
+            <label>Nội dung VN</label>
+            <textarea id="contentVN" class="editor-area" rows="8"></textarea>
+        </div>
+        <div class="form-row form-row-editor">
+            <label>Nội dung EN</label>
+            <textarea id="contentEN" class="editor-area" rows="8"></textarea>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({ selector: '#contentVN', height: 200 });
+        tinymce.init({ selector: '#contentEN', height: 200 });
+    </script>
+}
+
+<style>
+    .category-page {
+        display: flex;
+        gap: 18px;
+        margin-top: 12px;
+    }
+    .category-tree {
+        width: 260px;
+        background: #f8fbff;
+        border-radius: 6px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+        padding: 18px 10px;
+        min-height: 700px;
+    }
+    .category-tree ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    .category-tree li {
+        margin-bottom: 8px;
+        font-size: 15px;
+    }
+    .category-form {
+        flex: 1;
+        background: #f8fbff;
+        border-radius: 6px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+        padding: 18px 24px 18px 24px;
+        max-width: 100%;
+    }
+    .form-actions-top {
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+        margin-bottom: 12px;
+    }
+    .category-form .form-row {
+        display: flex;
+        align-items: center;
+        margin-bottom: 12px;
+    }
+    .category-form .form-row label {
+        width: 160px;
+        font-weight: 500;
+        color: #003366;
+        margin-right: 12px;
+        flex-shrink: 0;
+    }
+    .category-form .form-row input[type="text"],
+    .category-form .form-row input[type="number"],
+    .category-form .form-row select,
+    .category-form .form-row textarea {
+        flex: 1;
+        padding: 6px 10px;
+        border: 1px solid #b3c6e0;
+        border-radius: 4px;
+        font-size: 15px;
+        background: #fff;
+    }
+    .category-form .form-row input[type="radio"] {
+        margin-right: 4px;
+        margin-left: 8px;
+    }
+    .category-form .form-row-editor {
+        align-items: flex-start;
+    }
+    .category-form .editor-area {
+        flex: 1;
+        min-height: 120px;
+        border: 1px solid #b3c6e0;
+        border-radius: 4px;
+        font-size: 15px;
+        padding: 10px;
+        background: #fff;
+        resize: vertical;
+    }
+    .category-form .btn {
+        padding: 7px 18px;
+        font-size: 15px;
+        border-radius: 4px;
+        font-weight: 500;
+    }
+    
+</style>

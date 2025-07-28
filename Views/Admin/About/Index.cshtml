@@ -1,0 +1,113 @@
+@{
+    ViewData["Title"] = "Giới thiệu";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="title">Nội dung</div>
+<form class="about-form" method="post" enctype="multipart/form-data">
+    <div class="form-row">
+        <label for="titleVN">Tiêu đề VN</label>
+        <input type="text" id="titleVN" name="titleVN" value="Giới thiệu" />
+    </div>
+    <div class="form-row">
+        <label for="titleEN">Tiêu đề EN</label>
+        <input type="text" id="titleEN" name="titleEN" value="About us" />
+    </div>
+    <div class="form-row form-row-editor">
+        <label for="contentVN">Nội dung VN</label>
+        <textarea id="contentVN" name="contentVN" class="editor-area" rows="12"></textarea>
+    </div>
+    <div class="form-row form-row-editor">
+        <label for="contentEN">Nội dung EN</label>
+        <textarea id="contentEN" name="contentEN" class="editor-area" rows="12"></textarea>
+    </div>
+    <div class="form-actions">
+        <button type="submit" class="btn btn-success">Lưu</button>
+    </div>
+</form>
+
+@section Scripts {
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: '#contentVN',
+            height: 320,
+            plugins: 'image link code media table imagetools',
+            toolbar: 'undo redo | formatselect | bold italic underline | alignleft aligncenter alignright | bullist numlist outdent indent | link image media table | forecolor backcolor | code',
+            content_style: 'body { font-family: Roboto, sans-serif; font-size: 15px; color: #333; } img { max-width: 100%; height: auto; }',
+            setup: function (editor) {
+                editor.on('init', function () {
+                    editor.setContent(`CHÈN NỘI DUNG GIỚI THIỆU TIẾNG VIỆT Ở ĐÂY`);
+                });
+            }
+        });
+        tinymce.init({
+            selector: '#contentEN',
+            height: 320,
+            plugins: 'image link code media table imagetools',
+            toolbar: 'undo redo | formatselect | bold italic underline | alignleft aligncenter alignright | bullist numlist outdent indent | link image media table | forecolor backcolor | code',
+            content_style: 'body { font-family: Roboto, sans-serif; font-size: 15px; color: #333; } img { max-width: 100%; height: auto; }',
+            setup: function (editor) {
+                editor.on('init', function () {
+                    editor.setContent(`CHÈN NỘI DUNG GIỚI THIỆU TIẾNG ANH Ở ĐÂY`);
+                });
+            }
+        });
+    </script>
+}
+
+<style>
+    .about-form {
+        background: #f8fbff;
+        border-radius: 6px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+        padding: 18px 24px 18px 24px;
+        margin-bottom: 24px;
+        max-width: 100%;
+    }
+    .about-form .form-row {
+        display: flex;
+        align-items: center;
+        margin-bottom: 16px;
+    }
+    .about-form .form-row label {
+        width: 160px;
+        font-weight: 500;
+        color: #003366;
+        margin-right: 12px;
+        flex-shrink: 0;
+    }
+    .about-form .form-row input[type="text"] {
+        flex: 1;
+        padding: 6px 10px;
+        border: 1px solid #b3c6e0;
+        border-radius: 4px;
+        font-size: 15px;
+        background: #fff;
+    }
+    .about-form .form-row-editor {
+        align-items: flex-start;
+    }
+    .about-form .editor-area {
+        flex: 1;
+        min-height: 320px;
+        border: 1px solid #b3c6e0;
+        border-radius: 4px;
+        font-size: 15px;
+        padding: 10px;
+        background: #fff;
+        resize: vertical;
+    }
+    .about-form .form-actions {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 10px;
+    }
+    .about-form .btn-success {
+        padding: 7px 28px;
+        font-size: 16px;
+        border-radius: 4px;
+        font-weight: 500;
+    }
+    
+</style>

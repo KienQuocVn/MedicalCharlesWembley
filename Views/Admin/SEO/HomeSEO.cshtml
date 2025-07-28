@@ -1,0 +1,101 @@
+@{
+    ViewData["Title"] = "Seo";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="title">Seo</div>
+<form class="seo-form" method="post">
+    <div class="form-actions-top">
+        <button type="submit" class="btn btn-primary">Update</button>
+    </div>
+    <table class="seo-table">
+        <tr>
+            <td class="label">Mô tả</td>
+            <td><input type="text" name="Description" value="Trang chu" /></td>
+        </tr>
+        <tr>
+            <td class="label">Meta Title VN</td>
+            <td><input type="text" name="MetaTitleVN" value="CÔNG TY TNHH TMDV & KT TÂN LONG" /></td>
+        </tr>
+        <tr>
+            <td class="label">Meta Title EN</td>
+            <td><input type="text" name="MetaTitleEN" value="CÔNG TY TNHH TMDV & KT TÂN LONG" /></td>
+        </tr>
+        <tr>
+            <td class="label">Meta Keyword VN</td>
+            <td><input type="text" name="MetaKeywordVN" value="Tân Long, CW, Charles Wembley Việt Nam, Thiết bị y tế" /></td>
+        </tr>
+        <tr>
+            <td class="label">Meta Keyword EN</td>
+            <td><input type="text" name="MetaKeywordEN" value="Tan Long, CW, Charles Wembley Vietnam, medical instrument, medical devices, opthamology, surgical monitoring, high quality" /></td>
+        </tr>
+        <tr>
+            <td class="label">Meta Description VN</td>
+            <td><input type="text" name="MetaDescriptionVN" value="CÔNG TY TNHH TMDV & KT TÂN LONG" /></td>
+        </tr>
+        <tr>
+            <td class="label">Meta Description EN</td>
+            <td><input type="text" name="MetaDescriptionEN" value="CÔNG TY TNHH TMDV & KT TÂN LONG" /></td>
+        </tr>
+    </table>
+</form>
+
+<style>
+    .seo-form {
+        background: #f8fbff;
+        border-radius: 6px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+        padding: 18px 24px 18px 24px;
+        margin-bottom: 24px;
+        max-width: 100%;
+    }
+    .form-actions-top {
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+        margin-bottom: 12px;
+    }
+    .seo-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #fff;
+        border-radius: 6px;
+        font-size: 15px;
+    }
+    .seo-table td {
+        padding: 10px 8px;
+        border-bottom: 1px solid #e0e7ef;
+    }
+    .seo-table .label {
+        background: #e6eefa;
+        color: #003366;
+        font-weight: 500;
+        width: 180px;
+        min-width: 120px;
+    }
+    .seo-table input[type="text"] {
+        width: 100%;
+        padding: 6px 10px;
+        border: 1px solid #b3c6e0;
+        border-radius: 4px;
+        font-size: 15px;
+        background: #f8fbff;
+    }
+    .btn {
+        padding: 7px 18px;
+        font-size: 15px;
+        border-radius: 4px;
+        font-weight: 500;
+        border: none;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+    .btn-primary {
+        background: #0077b6;
+        color: #fff;
+    }
+    .btn-primary:hover {
+        background: #005080;
+    }
+    
+</style>

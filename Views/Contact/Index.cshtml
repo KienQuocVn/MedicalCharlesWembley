@@ -1,0 +1,74 @@
+@{
+    ViewData["Title"] = "Liên hệ";
+}
+<link rel="stylesheet" href="~/css/about.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/contact.css" asp-append-version="true" />
+
+<!-- Banner -->
+<div class="about-banner">
+    <img src="/userfile/config/Banner-Page-PC.jpg" alt="Banner">
+</div>
+
+<!-- Breadcrumb -->
+<nav class="about-breadcrumb" aria-label="breadcrumb">
+    <div class="container">
+        <ol class="breadcrumb mb-0 py-2 px-0">
+            <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Liên hệ</li>
+        </ol>
+    </div>
+</nav>
+
+<!-- Main Content -->
+<div class="about-main-content py-5">
+    <div class="container">
+        <h1 class="about-title text-center mb-4">LIÊN HỆ</h1>
+        <hr class="about-title-hr mb-4">
+        <form class="contact-form mx-auto mb-5" style="max-width: 700px;">
+            <div class="row g-3 mb-3">
+                <div class="col-md-6"><input type="text" class="form-control" placeholder="Họ tên"></div>
+                <div class="col-md-6"><input type="email" class="form-control" placeholder="Email*"></div>
+                <div class="col-md-6"><input type="text" class="form-control" placeholder="Điện thoại"></div>
+                <div class="col-md-6"><input type="text" class="form-control" placeholder="Địa chỉ"></div>
+            </div>
+            <input type="text" class="form-control mb-3" placeholder="Tiêu đề">
+            <textarea class="form-control mb-3" rows="5" placeholder="Nội dung"></textarea>
+            <div class="text-center">
+                <button type="submit" class="btn btn-dark px-5">Gửi</button>
+            </div>
+        </form>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="contact-map mb-2">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.1071596531933!2d106.64067691380008!3d10.803104092303423!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3175294f89be657f%3A0x1d7e8b3473315109!2zMTQvN0EgVGjDom4gTmjDom4gVHJ1bmcsIFBoxrDhu51uZyAxMywgVMOibiBCw6xuaCwgVGjDoG5oIHBo4buRIEjhu5MgQ2jDrSBNaW5oLCBWaeG7h3QgTmFt!5e0!3m2!1svi!2s!4v1641860727707!5m2!1svi!2s" width="400" height="400" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+                <div class="contact-branch-title">TP.HỒ CHÍ MINH</div>
+                <div class="contact-branch-info">
+                    <div><b>Địa chỉ:</b> 14/7A Thân Nhân Trung, Phường 13, Quận Tân Bình, TPHCM</div>
+                    <div><b>Điện thoại liên hệ:</b> (+84-8) 3849.8888 / 093 3460 320</div>
+                    <div><b>Email:</b> info@charleswembley.com</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="contact-map mb-2">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.1071596531933!2d106.64067691380008!3d10.803104092303423!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3175294f89be657f%3A0x1d7e8b3473315109!2zMTQvN0EgVGjDom4gTmjDom4gVHJ1bmcsIFBoxrDhu51uZyAxMywgVMOibiBCw6xuaCwgVGjDoG5oIHBo4buRIEjhu5MgQ2jDrSBNaW5oLCBWaeG7h3QgTmFt!5e0!3m2!1svi!2s!4v1641860727707!5m2!1svi!2s" width="400" height="400" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+                <div class="contact-branch-title">VĂN PHÒNG HÀ NỘI</div>
+                <div class="contact-branch-info">
+                    <div><b>Địa chỉ:</b> 02 Lô 1D Trung Yên, P. Trung Hòa, Quận Cầu Giấy, Hà Nội</div>
+                    <div><b>Tel:</b> +84-4 3762 2612</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="contact-map mb-2">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.1071596531933!2d106.64067691380008!3d10.803104092303423!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3175294f89be657f%3A0x1d7e8b3473315109!2zMTQvN0EgVGjDom4gTmjDom4gVHJ1bmcsIFBoxrDhu51uZyAxMywgVMOibiBCw6xuaCwgVGjDoG5oIHBo4buRIEjhu5MgQ2jDrSBNaW5oLCBWaeG7h3QgTmFt!5e0!3m2!1svi!2s!4v1641860727707!5m2!1svi!2s" width="400" height="400" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+                <div class="contact-branch-title">VĂN PHÒNG ĐÀ NẴNG</div>
+                <div class="contact-branch-info">
+                    <div><b>Địa chỉ:</b> 228 Lô B2-7 Nại Nam, P Hòa Cường Bắc, Quận Hải Châu, Tp Đà Nẵng</div>
+                    <div><b>Tel:</b> +84 – 511 356 2627</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
