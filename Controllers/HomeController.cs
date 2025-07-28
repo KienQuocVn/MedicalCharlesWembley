@@ -21,14 +21,12 @@ namespace MedicalCharlesWembley.Controllers
 
         public async Task<IActionResult> Index()
         {
-            // Lấy danh sách Category có Status = 1
             var categories = await _context.TProductCategory
                 .Where(c => c.Status == 1)
                 .OrderBy(c => c.SortOrder ?? int.MaxValue)
                 .ToListAsync();
             ViewBag.Categories = categories;
 
-            // Lấy 5 sản phẩm thuộc danh mục ICU (CategoryID = 112)
             var productsICU = await (from p in _context.TProduct
                          join pc in _context.TProductToCategory on p.ProductID equals pc.ProductID
                          join pd in _context.TProductDescription on p.ProductID equals pd.ProductID
@@ -46,7 +44,6 @@ namespace MedicalCharlesWembley.Controllers
                          }).Take(5).ToListAsync();
             ViewBag.ProductsICU = productsICU;
 
-            // Lấy 5 sản phẩm thuộc danh mục Sản & Nhi khoa (CategoryID = 113)
             var productsSanNhi = await (from p in _context.TProduct
                              join pc in _context.TProductToCategory on p.ProductID equals pc.ProductID
                              join pd in _context.TProductDescription on p.ProductID equals pd.ProductID
@@ -64,7 +61,6 @@ namespace MedicalCharlesWembley.Controllers
                              }).Take(5).ToListAsync();
             ViewBag.ProductsSanNhi = productsSanNhi;
 
-            // Lấy 5 sản phẩm thuộc danh mục Tim mạch (CategoryID = 117)
             var productsTimMach = await (from p in _context.TProduct
                               join pc in _context.TProductToCategory on p.ProductID equals pc.ProductID
                               join pd in _context.TProductDescription on p.ProductID equals pd.ProductID
@@ -82,7 +78,6 @@ namespace MedicalCharlesWembley.Controllers
                               }).Take(5).ToListAsync();
             ViewBag.ProductsTimMach = productsTimMach;
 
-            // Lấy 5 sản phẩm thuộc danh mục Nhãn khoa (CategoryID = 118)
             var productsNhanKhoa = await (from p in _context.TProduct
                                join pc in _context.TProductToCategory on p.ProductID equals pc.ProductID
                                join pd in _context.TProductDescription on p.ProductID equals pd.ProductID
@@ -100,7 +95,6 @@ namespace MedicalCharlesWembley.Controllers
                                }).Take(5).ToListAsync();
             ViewBag.ProductsNhanKhoa = productsNhanKhoa;
 
-            // Lấy 5 sản phẩm thuộc danh mục Tai - Mũi - Họng (CategoryID = 119)
             var productsTaiMuiHong = await (from p in _context.TProduct
                                  join pc in _context.TProductToCategory on p.ProductID equals pc.ProductID
                                  join pd in _context.TProductDescription on p.ProductID equals pd.ProductID
@@ -118,7 +112,6 @@ namespace MedicalCharlesWembley.Controllers
                                  }).Take(5).ToListAsync();
             ViewBag.ProductsTaiMuiHong = productsTaiMuiHong;
 
-            // Lấy 5 sản phẩm thuộc danh mục Niệu khoa - Nam khoa (CategoryID = 175)
             var productsNieuKhoaNamKhoa = await (from p in _context.TProduct
                                       join pc in _context.TProductToCategory on p.ProductID equals pc.ProductID
                                       join pd in _context.TProductDescription on p.ProductID equals pd.ProductID
@@ -136,7 +129,6 @@ namespace MedicalCharlesWembley.Controllers
                                       }).Take(5).ToListAsync();
             ViewBag.ProductsNieuKhoaNamKhoa = productsNieuKhoaNamKhoa;
 
-            // Lấy 5 sản phẩm thuộc danh mục Vật tư tiêu hao (CategoryID = 176)
             var productsVatTuTieuHao = await (from p in _context.TProduct
                                    join pc in _context.TProductToCategory on p.ProductID equals pc.ProductID
                                    join pd in _context.TProductDescription on p.ProductID equals pd.ProductID
@@ -154,7 +146,6 @@ namespace MedicalCharlesWembley.Controllers
                                    }).Take(5).ToListAsync();
             ViewBag.ProductsVatTuTieuHao = productsVatTuTieuHao;
 
-            // Lấy 5 sản phẩm thuộc danh mục Tổng quát (CategoryID = 208)
             var productsTongQuat = await (from p in _context.TProduct
                                join pc in _context.TProductToCategory on p.ProductID equals pc.ProductID
                                join pd in _context.TProductDescription on p.ProductID equals pd.ProductID

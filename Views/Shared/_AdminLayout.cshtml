@@ -119,6 +119,9 @@
         </main>
     </div>
     @await RenderSectionAsync("Scripts", required: false)
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const menuItems = document.querySelectorAll('.sidebar-menu > li.has-sub');
@@ -128,16 +131,12 @@
                 const submenu = item.querySelector('.sidebar-submenu');
 
                 link.addEventListener('click', (e) => {
-                    // Do not prevent default to allow navigation for navigable parents
-                    // Check if the link has a valid href (not '#')
                     if (link.getAttribute('href') !== '#') {
-                        return; // Allow navigation for links with valid routes
+                        return;
                     }
 
-                    // Toggle submenu only for non-navigable items (href="#")
                     e.preventDefault();
 
-                    // Close all other submenus
                     menuItems.forEach(otherItem => {
                         if (otherItem !== item) {
                             otherItem.classList.remove('open');
@@ -145,7 +144,6 @@
                         }
                     });
 
-                    // Toggle current submenu
                     const isOpen = item.classList.contains('open');
                     item.classList.toggle('open', !isOpen);
                     submenu.style.display = isOpen ? 'none' : 'block';

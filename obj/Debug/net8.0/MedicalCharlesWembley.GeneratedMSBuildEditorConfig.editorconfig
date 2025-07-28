@@ -64,8 +64,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cSG9tZVxGb290ZXJJbmZvLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/Work/medical.charleswembley/MedicalCharlesWembley/Views/Admin/Home/Header.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cSG9tZVxIZWFkZXIuY3NodG1s
+[D:/Work/medical.charleswembley/MedicalCharlesWembley/Views/Admin/Home/Header/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cSG9tZVxIZWFkZXJcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Work/medical.charleswembley/MedicalCharlesWembley/Views/Admin/Home/Header/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cSG9tZVxIZWFkZXJcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Work/medical.charleswembley/MedicalCharlesWembley/Views/Admin/Home/Header/Header.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cSG9tZVxIZWFkZXJcSGVhZGVyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Work/medical.charleswembley/MedicalCharlesWembley/Views/Admin/Home/PartnerLogo.cshtml]

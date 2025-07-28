@@ -1,0 +1,105 @@
+@model List<MedicalCharlesWembley.Models.TConfig>
+
+@{
+    ViewData["Title"] = "Admin - Header Config";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="title">TConfig list (Header)</div>
+<div class="search-bar">
+    <form asp-action="Header" asp-controller="Admin" asp-route-area="" method="get" class="d-flex">
+        <input type="text" id="searchConfigName" name="searchTerm" placeholder="ConfigName" value="@ViewData["CurrentSearchTerm"]" class="form-control me-2" />
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+    <a href="@Url.Action("Create", "Admin", new { area = "" })" class="btn btn-success ms-2">Insert</a>
+</div>
+<table class="table table-striped" id="configTable">
+    <thead>
+        <tr>
+            <th>No.</th>
+            <th>Config Name</th>
+            <th>Config Value</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            int index = 1;
+            foreach (var config in Model)
+            {
+                <tr data-config-name="@config.ConfigName">
+                    <td>@index</td>
+                    <td>@config.ConfigName</td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(config.ConfigValue) && Uri.IsWellFormedUriString(config.ConfigValue, UriKind.Absolute))
+                        {
+                            <img src="@config.ConfigValue" alt="@config.ConfigName" style="max-width: 100px;" />
+                        }
+                        else
+                        {
+                            @config.ConfigValue
+                        }
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Edit", "Admin", new { id = config.ConfigID, area = "" })" class="btn btn-sm btn-warning">✎ Edit</a>
+                        <button type="button" class="btn btn-sm btn-danger ms-1" data-bs-toggle="modal" data-bs-target="#deleteModal_@config.ConfigID">🗑 Delete</button>
+
+                        <!-- Modal xác nhận xóa -->
+                        <div class="modal fade" id="deleteModal_@config.ConfigID" tabindex="-1" aria-labelledby="deleteModalLabel_@config.ConfigID" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="deleteModalLabel_@config.ConfigID">Confirm Delete</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Are you sure you want to delete the config "<strong>@config.ConfigName</strong>"?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        <a href="@Url.Action("Delete", "Admin", new { id = config.ConfigID, area = "" })" class="btn btn-danger">Confirm</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                index++;
+            }
+        }
+        else
+        {
+            <tr><td colspan="4" class="text-center">No data available</td></tr>
+        }
+    </tbody>
+</table>
+
+<!-- Thêm JavaScript để lọc dữ liệu -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const searchInput = document.getElementById('searchConfigName');
+        const tableRows = document.querySelectorAll('#configTable tbody tr');
+
+        searchInput.addEventListener('input', function () {
+            const searchTerm = searchInput.value.trim().toLowerCase();
+
+            tableRows.forEach(row => {
+                const configName = row.getAttribute('data-config-name').toLowerCase();
+                if (searchTerm === '' || configName.includes(searchTerm)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+
+            // Cập nhật số thứ tự (No.) khi lọc
+            let index = 1;
+            tableRows.forEach(row => {
+                if (row.style.display !== 'none') {
+                    row.cells[0].textContent = index++;
+                }
+            });
+        });
+    });
+</script>

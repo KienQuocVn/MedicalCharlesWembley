@@ -9,7 +9,7 @@ public class AboutController : Controller
     [Route("gioi-thieu")]
     public IActionResult Index()
     {
-        return View(); // sẽ gọi Views/About/Index.cshtml
+        return View(); 
     }
 }
 

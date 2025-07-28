@@ -19,12 +19,10 @@ namespace MedicalCharlesWembley.Controllers
         [Route("san-pham")]
         public async Task<IActionResult> Index(int page = 1, string searchTerm = null)
         {
-            const int pageSize = 20; // 5 hàng x 4 sản phẩm = 20 sản phẩm mỗi trang
-
+            const int pageSize = 20; 
             IQueryable<TProduct> query = _context.TProduct
                 .Where(p => p.Status == true);
 
-            // Nếu có từ khóa tìm kiếm, áp dụng bộ lọc
             if (!string.IsNullOrEmpty(searchTerm))
             {
                 query = query.Where(p => p.Alias_Url.Contains(searchTerm) || 
@@ -33,10 +31,8 @@ namespace MedicalCharlesWembley.Controllers
                                             .Any(pd => pd.Name.Contains(searchTerm)));
             }
 
-            // Tổng số sản phẩm
             var totalProducts = await query.CountAsync();
 
-            // Lấy danh sách sản phẩm với phân trang
             var products = await (from p in query
                                   join pd in _context.TProductDescription on p.ProductID equals pd.ProductID
                                   join pi in _context.TProductImage on p.ProductID equals pi.ProductID
@@ -51,14 +47,12 @@ namespace MedicalCharlesWembley.Controllers
                                   .Take(pageSize)
                                   .ToListAsync();
 
-            // Tính tổng số trang
             var totalPages = (int)Math.Ceiling(totalProducts / (double)pageSize);
 
-            // Truyền dữ liệu vào ViewBag
             ViewBag.Products = products;
             ViewBag.CurrentPage = page;
             ViewBag.TotalPages = totalPages;
-            ViewBag.SearchTerm = searchTerm; // Lưu từ khóa tìm kiếm để hiển thị lại trong input
+            ViewBag.SearchTerm = searchTerm; 
 
             return View();
         }

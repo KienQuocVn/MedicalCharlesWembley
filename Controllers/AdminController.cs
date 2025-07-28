@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using MedicalCharlesWembley.Data; // Đảm bảo thêm namespace của DbContext
+using MedicalCharlesWembley.Data;
 using MedicalCharlesWembley.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,7 +7,7 @@ namespace MedicalCharlesWembley.Controllers
 {
     public class AdminController : Controller
     {
-        private readonly AppDbContext _context; // Giả sử AppDbContext là DbContext của bạn
+        private readonly AppDbContext _context;
 
         public AdminController(AppDbContext context)
         {
@@ -21,12 +21,85 @@ namespace MedicalCharlesWembley.Controllers
         }
 
         [Route("admin/home/header")]
-        public async Task<IActionResult> Header()
+        public async Task<IActionResult> Header(string searchTerm = null)
         {
-            var headerConfigs = await _context.TConfig
-                .Where(c => c.ConfigGroup2 == "Header")
-                .ToListAsync();
-            return View("~/Views/Admin/Home/Header.cshtml", headerConfigs);
+            IQueryable<TConfig> query = _context.TConfig
+                .Where(c => c.ConfigGroup2 == "Header");
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                query = query.Where(c => c.ConfigName != null && c.ConfigName.Contains(searchTerm));
+            }
+
+            var headerConfigs = await query.ToListAsync();
+            ViewData["CurrentSearchTerm"] = searchTerm;
+            return View("~/Views/Admin/Home/Header/Header.cshtml", headerConfigs);
+        }
+
+        // Chức năng Insert
+        [Route("admin/home/create")]
+        public IActionResult Create()
+        {
+            return View("~/Views/Admin/Home/Header/Create.cshtml");
+        }
+
+        [HttpPost]
+        [Route("admin/home/create")]
+        public async Task<IActionResult> Create(TConfig config)
+        {
+            if (ModelState.IsValid)
+            {
+                config.ConfigGroup2 = "Header";
+                _context.TConfig.Add(config);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Header");
+            }
+            return View("~/Views/Admin/Home/Header/Create.cshtml", config);
+        }
+
+        // Chức năng Edit
+        [Route("admin/home/edit")]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var config = await _context.TConfig.FindAsync(id);
+            if (config == null)
+            {
+                return NotFound();
+            }
+            return View("~/Views/Admin/Home/Header/Edit.cshtml", config);
+        }
+
+        [HttpPost]
+        [Route("admin/home/edit")]
+        public async Task<IActionResult> Edit(int id, TConfig config)
+        {
+            if (id != config.ConfigID)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                _context.Update(config);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Header");
+            }
+            return View("~/Views/Admin/Home/Header/Edit.cshtml", config);
+        }
+
+        // Chức năng Delete
+        [Route("admin/home/delete")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var config = await _context.TConfig.FindAsync(id);
+            if (config == null)
+            {
+                return NotFound();
+            }
+
+            _context.TConfig.Remove(config);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Header");
         }
 
         [Route("admin/home/slider")]

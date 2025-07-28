@@ -9,7 +9,6 @@ namespace MedicalCharlesWembley.Data
         {
         }
 
-        // DbSet for all tables (sử dụng tên số ít để nhất quán với tên bảng)
         public DbSet<MapAllID> MapAllID { get; set; }
         public DbSet<NewLetter> NewLetter { get; set; }
         public DbSet<TArea> TArea { get; set; }
