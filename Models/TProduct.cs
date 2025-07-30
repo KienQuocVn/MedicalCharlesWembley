@@ -7,7 +7,7 @@ namespace MedicalCharlesWembley.Models
         public string? Keyword { get; set; }
         public int Quantity { get; set; }
         public int? StockStatusID { get; set; }
-        public long? Image { get; set; } 
+        public long? Image { get; set; }
         public int ManufacturerID { get; set; }
         public bool Shipping { get; set; }
         public decimal Price { get; set; }
@@ -34,5 +34,17 @@ namespace MedicalCharlesWembley.Models
         public bool? ProNew { get; set; }
         public bool? ProSale { get; set; }
         public string? Alias_Url { get; set; }
+
+        // Thêm navigation properties
+        public virtual ICollection<TProductDescription> TProductDescription { get; set; }
+        public virtual ICollection<TProductToCategory> TProductToCategory { get; set; }
+        public virtual ICollection<TProductImage> TProductImage { get; set; }
+
+        public TProduct()
+        {
+            TProductDescription = new HashSet<TProductDescription>();
+            TProductToCategory = new HashSet<TProductToCategory>();
+            TProductImage = new HashSet<TProductImage>();
+        }
     }
 }

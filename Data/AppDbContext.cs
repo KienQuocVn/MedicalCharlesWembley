@@ -101,7 +101,7 @@ namespace MedicalCharlesWembley.Data
 
             // NewLetter
             modelBuilder.Entity<NewLetter>()
-                .ToTable("NewLetter")
+                .ToTable("T_NewLetter", schema: "dbo") 
                 .HasKey(n => n.NewLetterID)
                 .HasName("PK_T_NewLetter");
 
