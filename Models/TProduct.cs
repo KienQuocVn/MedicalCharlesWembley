@@ -16,7 +16,7 @@ namespace MedicalCharlesWembley.Models
         public decimal Weight { get; set; }
         public int WeightClassID { get; set; }
         public int? SortOrder { get; set; }
-        public bool Status { get; set; }
+        public int? Status { get; set; }
         public DateTime? RegDate { get; set; }
         public DateTime? ModifyDate { get; set; }
         public int CountView { get; set; }
@@ -34,17 +34,5 @@ namespace MedicalCharlesWembley.Models
         public bool? ProNew { get; set; }
         public bool? ProSale { get; set; }
         public string? Alias_Url { get; set; }
-
-        // Thêm navigation properties
-        public virtual ICollection<TProductDescription> TProductDescription { get; set; }
-        public virtual ICollection<TProductToCategory> TProductToCategory { get; set; }
-        public virtual ICollection<TProductImage> TProductImage { get; set; }
-
-        public TProduct()
-        {
-            TProductDescription = new HashSet<TProductDescription>();
-            TProductToCategory = new HashSet<TProductToCategory>();
-            TProductImage = new HashSet<TProductImage>();
-        }
     }
 }

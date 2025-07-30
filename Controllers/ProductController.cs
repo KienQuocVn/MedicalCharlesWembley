@@ -21,14 +21,14 @@ namespace MedicalCharlesWembley.Controllers
         {
             const int pageSize = 20; 
             IQueryable<TProduct> query = _context.TProduct
-                .Where(p => p.Status == true);
+                .Where(p => p.Status == 1); // Thay true bằng 1 (giả sử 1 là active)
 
             if (!string.IsNullOrEmpty(searchTerm))
             {
-                query = query.Where(p => p.Alias_Url.Contains(searchTerm) || 
+                query = query.Where(p => p.Alias_Url != null && p.Alias_Url.Contains(searchTerm) || 
                                         _context.TProductDescription
                                             .Where(pd => pd.ProductID == p.ProductID && pd.LanguageID == 1)
-                                            .Any(pd => pd.Name.Contains(searchTerm)));
+                                            .Any(pd => pd.Name != null && pd.Name.Contains(searchTerm)));
             }
 
             var totalProducts = await query.CountAsync();
@@ -36,12 +36,12 @@ namespace MedicalCharlesWembley.Controllers
             var products = await (from p in query
                                   join pd in _context.TProductDescription on p.ProductID equals pd.ProductID
                                   join pi in _context.TProductImage on p.ProductID equals pi.ProductID
-                                  where p.Status == true && pd.LanguageID == 1
+                                  where p.Status == 1 && pd.LanguageID == 1
                                   select new
                                   {
                                       p.ProductID,
-                                      Name = pd.Name,
-                                      ImageLink = pi.ImageLink
+                                      Name = pd.Name ?? "Không có tên", // Xử lý null
+                                      ImageLink = pi.ImageLink ?? ""   // Xử lý null
                                   })
                                   .Skip((page - 1) * pageSize)
                                   .Take(pageSize)
@@ -53,7 +53,6 @@ namespace MedicalCharlesWembley.Controllers
             ViewBag.CurrentPage = page;
             ViewBag.TotalPages = totalPages;
             ViewBag.SearchTerm = searchTerm; 
-
             return View();
         }
 

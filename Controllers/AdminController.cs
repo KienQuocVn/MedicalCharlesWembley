@@ -279,61 +279,82 @@ namespace MedicalCharlesWembley.Controllers
         }
 
         [Route("admin/products/productlist")]
-        public async Task<IActionResult> ProductList(int page = 1, string searchTerm = null, int? categoryId = null)
+        public async Task<IActionResult> ProductList(string statusFilter = null, string categoryFilter = null, string searchTerm = null)
         {
-            const int pageSize = 10;
-            IQueryable<TProduct> query = _context.TProduct
-                .Include(p => p.TProductDescription)
-                .Include(p => p.TProductToCategory)
-                .ThenInclude(pc => pc.TProductCategory)
-                .Include(p => p.TProductImage);
+            var query = from p in _context.TProduct
+                        join pd in _context.TProductDescription
+                            on p.ProductID equals pd.ProductID into descriptions
+                        from pd in descriptions.Where(d => d.LanguageID == 1).DefaultIfEmpty()
+                        join pi in _context.TProductImage
+                            on p.ProductID equals pi.ProductID into images
+                        from pi in images.DefaultIfEmpty()
+                        join ptc in _context.TProductToCategory
+                            on p.ProductID equals ptc.ProductID into productToCategories
+                        from ptc in productToCategories.DefaultIfEmpty()
+                        join pc in _context.TProductCategory
+                            on ptc.CategoryID equals pc.CategoryID into categories
+                        from pc in categories.DefaultIfEmpty()
+                        join pcd in _context.TProductCategoryDescription
+                            on pc.CategoryID equals pcd.CategoryID into categoryDescriptions
+                        from pcd in categoryDescriptions.Where(d => d.LanguageID == 1).DefaultIfEmpty()
+                        select new
+                        {
+                            ProductID = p.ProductID,
+                            Name = pd != null ? pd.Name : null,
+                            ImageLink = pi != null ? pi.ImageLink : null,
+                            CategoryName = pcd != null ? pcd.Name : null,
+                            SortOrder = p.SortOrder,
+                            Price = p.Price,
+                            Status = p.Status,
+                            RegDate = p.RegDate,
+                            Model = p.Model
+                        };
 
-            // Lọc theo từ khóa tìm kiếm
+            // Áp dụng bộ lọc trạng thái (1: Ẩn, 0: Hiện)
+            if (!string.IsNullOrEmpty(statusFilter))
+            {
+                if (statusFilter == "1")
+                {
+                    query = query.Where(p => p.Status == 1); // Ẩn
+                }
+                else if (statusFilter == "0")
+                {
+                    query = query.Where(p => p.Status == 0); // Hiện
+                }
+            }
+
+            // Áp dụng bộ lọc nhóm sản phẩm
+            if (!string.IsNullOrEmpty(categoryFilter))
+            {
+                query = query.Where(p => p.CategoryName == categoryFilter);
+            }
+
+            // Áp dụng tìm kiếm theo tên sản phẩm
             if (!string.IsNullOrEmpty(searchTerm))
             {
-                query = query.Where(p => p.TProductDescription.Any(d => d.Name != null && d.Name.Contains(searchTerm)) ||
-                                        p.Model != null && p.Model.Contains(searchTerm));
+                query = query.Where(p => p.Name != null && p.Name.Contains(searchTerm));
             }
-
-            // Lọc theo danh mục
-            if (categoryId.HasValue && categoryId > 0)
-            {
-                query = query.Where(p => p.TProductToCategory.Any(pc => pc.CategoryID == categoryId));
-            }
-
-            var totalRecords = await query.CountAsync();
-            var totalPages = (int)Math.Ceiling(totalRecords / (double)pageSize);
 
             var products = await query
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
+                .GroupBy(p => new { p.ProductID, p.Name, p.ImageLink, p.SortOrder, p.Price, p.Status, p.RegDate, p.Model })
+                .Select(g => new
+                {
+                    ProductID = g.Key.ProductID,
+                    Name = g.Key.Name,
+                    ImageLink = g.Key.ImageLink,
+                    SortOrder = g.Key.SortOrder,
+                    Price = g.Key.Price,
+                    Status = g.Key.Status,
+                    RegDate = g.Key.RegDate,
+                    Model = g.Key.Model,
+                    CategoryName = string.Join(", ", g.Select(x => x.CategoryName).Where(x => x != null))
+                })
                 .ToListAsync();
 
-            // Xử lý logic null trong bộ nhớ
-            var result = products.Select(p => new
-            {
-                p.ProductID,
-                ProductName = p.TProductDescription.FirstOrDefault(d => d.LanguageID == 1)?.Name ?? "No Name",
-                CategoryName = p.TProductToCategory.Select(pc => pc.TProductCategory).FirstOrDefault()?.Keyword ?? "No Category",
-                p.SortOrder,
-                p.Price,
-                p.Status,
-                p.RegDate,
-                ImageLink = p.TProductImage.FirstOrDefault()?.ImageLink ?? "https://via.placeholder.com/48x48"
-            }).ToList();
-
-            ViewBag.TotalPages = totalPages;
-            ViewBag.CurrentPage = page;
-            ViewBag.SearchTerm = searchTerm;
-            ViewBag.CategoryId = categoryId;
-            ViewBag.TotalRecords = totalRecords;
-
-            ViewBag.Categories = await _context.TProductCategory
-                .Select(c => new { c.CategoryID, c.Keyword })
-                .ToListAsync();
-
-            return View("~/Views/Admin/Products/ProductList.cshtml", result);
+            ViewBag.Products = products;
+            return View("~/Views/Admin/Products/ProductList.cshtml");
         }
+
 
         [Route("admin/products/produccategory")]
         public IActionResult ProducCategory()

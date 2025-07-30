@@ -22,7 +22,7 @@ namespace MedicalCharlesWembley.Controllers
         public async Task<IActionResult> Index()
         {
             var categories = await _context.TProductCategory
-                .Where(c => c.Status == 1)
+                .Where(c => c.Status == 1) // Thay == 1 thay vì so sánh với bool
                 .OrderBy(c => c.SortOrder ?? int.MaxValue)
                 .ToListAsync();
             ViewBag.Categories = categories;
@@ -32,15 +32,15 @@ namespace MedicalCharlesWembley.Controllers
                          join pd in _context.TProductDescription on p.ProductID equals pd.ProductID
                          join pi in _context.TProductImage on p.ProductID equals pi.ProductID into imgGroup
                          from pi in imgGroup.DefaultIfEmpty()
-                         where pc.CategoryID == 112 && p.Status == true && pd.LanguageID == 1
+                         where pc.CategoryID == 112 && p.Status == 1 && pd.LanguageID == 1 // Thay true bằng 1
                          orderby p.SortOrder
                          select new
                          {
                              p.ProductID,
                              p.Alias_Url,
-                             ImageLink = pi.ImageLink,
+                             ImageLink = pi.ImageLink ?? "", // Xử lý null
                              p.str1,
-                             Name = pd.Name
+                             Name = pd.Name ?? "Không có tên" // Xử lý null
                          }).Take(5).ToListAsync();
             ViewBag.ProductsICU = productsICU;
 
@@ -49,15 +49,15 @@ namespace MedicalCharlesWembley.Controllers
                              join pd in _context.TProductDescription on p.ProductID equals pd.ProductID
                              join pi in _context.TProductImage on p.ProductID equals pi.ProductID into imgGroup
                              from pi in imgGroup.DefaultIfEmpty()
-                             where pc.CategoryID == 113 && p.Status == true && pd.LanguageID == 1
+                             where pc.CategoryID == 113 && p.Status == 1 && pd.LanguageID == 1 // Thay true bằng 1
                              orderby p.SortOrder
                              select new
                              {
                                  p.ProductID,
                                  p.Alias_Url,
-                                 ImageLink = pi.ImageLink,
+                                 ImageLink = pi.ImageLink ?? "", // Xử lý null
                                  p.str1,
-                                 Name = pd.Name
+                                 Name = pd.Name ?? "Không có tên" // Xử lý null
                              }).Take(5).ToListAsync();
             ViewBag.ProductsSanNhi = productsSanNhi;
 
@@ -66,15 +66,15 @@ namespace MedicalCharlesWembley.Controllers
                               join pd in _context.TProductDescription on p.ProductID equals pd.ProductID
                               join pi in _context.TProductImage on p.ProductID equals pi.ProductID into imgGroup
                               from pi in imgGroup.DefaultIfEmpty()
-                              where pc.CategoryID == 117 && p.Status == true && pd.LanguageID == 1
+                              where pc.CategoryID == 117 && p.Status == 1 && pd.LanguageID == 1 // Thay true bằng 1
                               orderby p.SortOrder
                               select new
                               {
                                   p.ProductID,
                                   p.Alias_Url,
-                                  ImageLink = pi.ImageLink,
+                                  ImageLink = pi.ImageLink ?? "", // Xử lý null
                                   p.str1,
-                                  Name = pd.Name
+                                  Name = pd.Name ?? "Không có tên" // Xử lý null
                               }).Take(5).ToListAsync();
             ViewBag.ProductsTimMach = productsTimMach;
 
@@ -83,15 +83,15 @@ namespace MedicalCharlesWembley.Controllers
                                join pd in _context.TProductDescription on p.ProductID equals pd.ProductID
                                join pi in _context.TProductImage on p.ProductID equals pi.ProductID into imgGroup
                                from pi in imgGroup.DefaultIfEmpty()
-                               where pc.CategoryID == 118 && p.Status == true && pd.LanguageID == 1
+                               where pc.CategoryID == 118 && p.Status == 1 && pd.LanguageID == 1 // Thay true bằng 1
                                orderby p.SortOrder
                                select new
                                {
                                    p.ProductID,
                                    p.Alias_Url,
-                                   ImageLink = pi.ImageLink,
+                                   ImageLink = pi.ImageLink ?? "", // Xử lý null
                                    p.str1,
-                                   Name = pd.Name
+                                   Name = pd.Name ?? "Không có tên" // Xử lý null
                                }).Take(5).ToListAsync();
             ViewBag.ProductsNhanKhoa = productsNhanKhoa;
 
@@ -100,15 +100,15 @@ namespace MedicalCharlesWembley.Controllers
                                  join pd in _context.TProductDescription on p.ProductID equals pd.ProductID
                                  join pi in _context.TProductImage on p.ProductID equals pi.ProductID into imgGroup
                                  from pi in imgGroup.DefaultIfEmpty()
-                                 where pc.CategoryID == 119 && p.Status == true && pd.LanguageID == 1
+                                 where pc.CategoryID == 119 && p.Status == 1 && pd.LanguageID == 1 // Thay true bằng 1
                                  orderby p.SortOrder
                                  select new
                                  {
                                      p.ProductID,
                                      p.Alias_Url,
-                                     ImageLink = pi.ImageLink,
+                                     ImageLink = pi.ImageLink ?? "", // Xử lý null
                                      p.str1,
-                                     Name = pd.Name
+                                     Name = pd.Name ?? "Không có tên" // Xử lý null
                                  }).Take(5).ToListAsync();
             ViewBag.ProductsTaiMuiHong = productsTaiMuiHong;
 
@@ -117,15 +117,15 @@ namespace MedicalCharlesWembley.Controllers
                                       join pd in _context.TProductDescription on p.ProductID equals pd.ProductID
                                       join pi in _context.TProductImage on p.ProductID equals pi.ProductID into imgGroup
                                       from pi in imgGroup.DefaultIfEmpty()
-                                      where pc.CategoryID == 175 && p.Status == true && pd.LanguageID == 1
+                                      where pc.CategoryID == 175 && p.Status == 1 && pd.LanguageID == 1 // Thay true bằng 1
                                       orderby p.SortOrder
                                       select new
                                       {
                                           p.ProductID,
                                           p.Alias_Url,
-                                          ImageLink = pi.ImageLink,
+                                          ImageLink = pi.ImageLink ?? "", // Xử lý null
                                           p.str1,
-                                          Name = pd.Name
+                                          Name = pd.Name ?? "Không có tên" // Xử lý null
                                       }).Take(5).ToListAsync();
             ViewBag.ProductsNieuKhoaNamKhoa = productsNieuKhoaNamKhoa;
 
@@ -134,15 +134,15 @@ namespace MedicalCharlesWembley.Controllers
                                    join pd in _context.TProductDescription on p.ProductID equals pd.ProductID
                                    join pi in _context.TProductImage on p.ProductID equals pi.ProductID into imgGroup
                                    from pi in imgGroup.DefaultIfEmpty()
-                                   where pc.CategoryID == 176 && p.Status == true && pd.LanguageID == 1
+                                   where pc.CategoryID == 176 && p.Status == 1 && pd.LanguageID == 1 // Thay true bằng 1
                                    orderby p.SortOrder
                                    select new
                                    {
                                        p.ProductID,
                                        p.Alias_Url,
-                                       ImageLink = pi.ImageLink,
+                                       ImageLink = pi.ImageLink ?? "", // Xử lý null
                                        p.str1,
-                                       Name = pd.Name
+                                       Name = pd.Name ?? "Không có tên" // Xử lý null
                                    }).Take(5).ToListAsync();
             ViewBag.ProductsVatTuTieuHao = productsVatTuTieuHao;
 
@@ -151,15 +151,15 @@ namespace MedicalCharlesWembley.Controllers
                                join pd in _context.TProductDescription on p.ProductID equals pd.ProductID
                                join pi in _context.TProductImage on p.ProductID equals pi.ProductID into imgGroup
                                from pi in imgGroup.DefaultIfEmpty()
-                               where pc.CategoryID == 208 && p.Status == true && pd.LanguageID == 1
+                               where pc.CategoryID == 208 && p.Status == 1 && pd.LanguageID == 1 // Thay true bằng 1
                                orderby p.SortOrder
                                select new
                                {
                                    p.ProductID,
                                    p.Alias_Url,
-                                   ImageLink = pi.ImageLink,
+                                   ImageLink = pi.ImageLink ?? "", // Xử lý null
                                    p.str1,
-                                   Name = pd.Name
+                                   Name = pd.Name ?? "Không có tên" // Xử lý null
                                }).Take(5).ToListAsync();
             ViewBag.ProductsTongQuat = productsTongQuat;
             

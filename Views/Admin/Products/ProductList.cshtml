@@ -1,34 +1,40 @@
-@model List<dynamic>
-
 @{
-    ViewData["Title"] = "Danh sách sản phẩm";
+    ViewData["Title"] = "Danh sách sản phẩm";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 <div class="title">Danh sách sản phẩm</div>
 
-<div class="productlist-toolbar">
-    <form id="filterForm" method="get" action="@Url.Action("ProductList")" class="d-flex align-items-center">
-        <select name="categoryId" class="form-select select-sm">
+<div class="filter-toolbar">
+    <div class="filter-group">
+        <!-- Bộ lọc trạng thái -->
+        <select class="form-control form-control-sm" id="statusFilter">
+            <option value="">Chọn trạng thái</option>
+            <option value="1">Hiện</option>
+            <option value="0">Ẩn</option>
+        </select>
+        <!-- Bộ lọc nhóm sản phẩm -->
+        <select class="form-control form-control-sm" id="categoryFilter">
             <option value="">Chọn nhóm sản phẩm</option>
-            @foreach (var category in ViewBag.Categories)
+            @if (ViewBag.Products != null && ((IEnumerable<dynamic>)ViewBag.Products).Any())
             {
-                @if (ViewBag.CategoryId == category.CategoryID)
+                var categories = ((IEnumerable<dynamic>)ViewBag.Products).Select(p => p.CategoryName).Distinct().Where(c => c != null);
+                foreach (var category in categories)
                 {
-                    <option value="@category.CategoryID" selected>@category.Keyword</option>
-                }
-                else
-                {
-                    <option value="@category.CategoryID">@category.Keyword</option>
+                    <option value="@category">@category</option>
                 }
             }
         </select>
-        <input type="text" name="searchTerm" class="form-control input-sm ms-2" placeholder="Tìm kiếm sản phẩm..." value="@ViewBag.SearchTerm" />
-        <button type="submit" class="btn btn-primary btn-sm ms-2">Tìm</button>
-    </form>
-    <div class="button-group">
-        <button class="btn btn-danger btn-sm" id="deleteSelected">Xóa</button>
-        <button class="btn btn-success btn-sm" id="createNew">Tạo mới</button>
+        <!-- Thanh tìm kiếm -->
+        <input type="text" class="form-control form-control-sm" id="searchTerm" placeholder="Tìm tên sản phẩm..." />
+        <!-- Nút Search -->
+        <button class="btn btn-primary btn-sm" id="searchButton">Search</button>
+    </div>
+    <div class="productlist-toolbar">
+        <div class="button-group">
+            <button class="btn btn-danger btn-sm" id="deleteSelected">Xóa</button>
+            <button class="btn btn-success btn-sm" id="createNew">Tạo mới</button>
+        </div>
     </div>
 </div>
 
@@ -41,28 +47,56 @@
             <th>Tên SP</th>
             <th>Danh mục</th>
             <th>Thứ tự</th>
-            <th>Giá bán lẻ</th>
+            <th>Giá bán/cũ</th>
             <th>Trạng thái</th>
             <th>Thông tin</th>
             <th>Hành động</th>
         </tr>
     </thead>
     <tbody>
-        @if (Model != null && Model.Any())
+        @if (ViewBag.Products != null && ((IEnumerable<dynamic>)ViewBag.Products).Any())
         {
-            int index = (ViewBag.CurrentPage - 1) * 10 + 1;
-            foreach (var item in Model)
+            int index = 1;
+            foreach (var item in ViewBag.Products)
             {
                 <tr data-product-id="@item.ProductID">
                     <td><input type="checkbox" class="rowCheckbox" data-id="@item.ProductID" /></td>
                     <td>@index</td>
-                    <td><img src="@item.ImageLink" alt="@item.ProductName" class="product-img" /></td>
-                    <td>@item.ProductName</td>
-                    <td>@item.CategoryName</td>
-                    <td>@(item.SortOrder ?? 0)</td>
-                    <td>@item.Price.ToString("N0") VND</td>
-                    <td><span class="status @(item.Status ? "active" : "inactive")">@(item.Status ? "✔" : "✖")</span></td>
-                    <td>@item.RegDate?.ToString("dd-MM-yyyy")</td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(item.ImageLink))
+                        {
+                            <img src="/UserFile/Products/@item.ImageLink" alt="@item.Name" class="product-img" />
+                        }
+                        else
+                        {
+                            <span>Không có ảnh</span>
+                        }
+                    </td>
+                    <td>@(item.Name ?? "Không có tên")</td>
+                    <td>@(item.CategoryName ?? "Không có danh mục")</td>
+                    <td>@item.SortOrder</td>
+                    <td>
+                        <input type="text" class="form-control form-control-sm text-danger" value="@item.Price" style="width:70px; display:inline-block;" />
+                        <input type="text" class="form-control form-control-sm mt-2" style="width:70px; display:inline-block;" />
+                    </td>
+                    <td>
+                        @if (item.Status != null)
+                        {
+                            if (item.Status == 1)
+                            {
+                                <span class="status active">✔</span>
+                            }
+                            else
+                            {
+                                <span class="status inactive">✖</span>
+                            }
+                        }
+                        else
+                        {
+                            <span class="status">N/A</span>
+                        }
+                    </td>
+                    <td>@(item.RegDate?.ToString("dd/MM/yyyy") ?? "N/A")<br /> ID - @item.ProductID - @item.Model</td>
                     <td>
                         <span class="action-btn" title="Sửa" onclick="editProduct(@item.ProductID)"><i class="fa fa-edit"></i></span>
                         <span class="action-btn" title="Xóa" data-bs-toggle="modal" data-bs-target="#deleteModal_@item.ProductID"><i class="fa fa-trash"></i></span>
@@ -73,15 +107,15 @@
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="deleteModalLabel_@item.ProductID">Confirm Delete</h5>
+                                        <h5 class="modal-title" id="deleteModalLabel_@item.ProductID">Xác nhận xóa</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        Are you sure you want to delete the product "<strong>@item.ProductName</strong>"?
+                                        Bạn có chắc muốn xóa sản phẩm "<strong>@item.Name</strong>"?
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                        <a href="@Url.Action("DeleteProduct", "Admin", new { id = item.ProductID })" class="btn btn-danger">Confirm</a>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                                        <a href="@Url.Action("DeleteProduct", "Admin", new { id = item.ProductID })" class="btn btn-danger">Xác nhận</a>
                                     </div>
                                 </div>
                             </div>
@@ -93,57 +127,45 @@
         }
         else
         {
-            <tr><td colspan="10" class="text-center">No data available</td></tr>
+            <tr><td colspan="10" class="text-center">Không có dữ liệu</td></tr>
         }
     </tbody>
 </table>
 
-<div class="productlist-pagination">
-    @if (ViewBag.TotalPages > 1)
-    {
-        <a class="btn btn-light btn-sm" href="@Url.Action("ProductList", new { page = 1, searchTerm = ViewBag.SearchTerm, categoryId = ViewBag.CategoryId })">Trang đầu</a>
-        <a class="btn btn-light btn-sm" href="@Url.Action("ProductList", new { page = ViewBag.CurrentPage - 1, searchTerm = ViewBag.SearchTerm, categoryId = ViewBag.CategoryId })" 
-           @(ViewBag.CurrentPage > 1 ? "" : "style=display:none")">Trang sau</a>
-
-        @for (int i = 1; i <= ViewBag.TotalPages; i++)
-        {
-            <a class="btn btn-light btn-sm @(i == ViewBag.CurrentPage ? "active" : "")" 
-               href="@Url.Action("ProductList", new { page = i, searchTerm = ViewBag.SearchTerm, categoryId = ViewBag.CategoryId })">@i</a>
-        }
-
-        <a class="btn btn-light btn-sm" href="@Url.Action("ProductList", new { page = ViewBag.CurrentPage + 1, searchTerm = ViewBag.SearchTerm, categoryId = ViewBag.CategoryId })" 
-           @(ViewBag.CurrentPage < ViewBag.TotalPages ? "" : "style=display:none")">Trang trước</a>
-        <a class="btn btn-light btn-sm" href="@Url.Action("ProductList", new { page = ViewBag.TotalPages, searchTerm = ViewBag.SearchTerm, categoryId = ViewBag.CategoryId })">Trang cuối</a>
-    }
-    <span class="ms-3">Có <b>@ViewBag.TotalRecords</b> sản phẩm</span>
-</div>
-
 <style>
     .productlist-toolbar {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
+        justify-content: flex-end;
         gap: 10px;
         margin-bottom: 16px;
-        flex-wrap: wrap;
-    }
-
-    .productlist-toolbar .form-select,
-    .productlist-toolbar .form-control {
-        width: 180px;
-        min-width: 120px;
-        font-size: 15px;
-        padding: 4px 8px;
-    }
-
-    .productlist-toolbar .input-sm {
-        width: 220px;
     }
 
     .productlist-toolbar .btn {
         padding: 5px 14px;
         font-size: 15px;
         border-radius: 4px;
+    }
+
+    .filter-toolbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+    }
+
+    .filter-group {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .filter-group .form-control {
+        width: 150px;
+        padding: 5px;
+    }
+
+    #categoryFilter {
+        width: 350px; /* Tăng width riêng cho bộ lọc nhóm sản phẩm */
     }
 
     .productlist-table {
@@ -153,7 +175,7 @@
         border-radius: 6px;
         overflow: hidden;
         box-shadow: 0 2px 8px rgba(0,0,0,0.03);
-        font-size: 15px;
+        font-size: 10px;
     }
 
     .productlist-table th, .productlist-table td {
@@ -167,6 +189,7 @@
         background: #e6eefa;
         color: #003366;
         font-weight: 600;
+        font-size: 9px;
     }
 
     .product-img {
@@ -191,44 +214,22 @@
         cursor: pointer;
         margin: 0 3px;
         color: #0077b6;
-        font-size: 18px;
+        font-size: 15px;
         transition: color 0.2s;
     }
 
     .action-btn:hover {
         color: #ff4500;
     }
-
-    .productlist-pagination {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        margin-top: 18px;
-        font-size: 15px;
-    }
-
-    .productlist-pagination .btn {
-        padding: 4px 10px;
-        font-size: 15px;
-        border-radius: 4px;
-    }
-
-    .productlist-pagination .btn.active {
-        background: #0077b6;
-        color: #fff;
-        font-weight: bold;
-    }
 </style>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
-        // Chọn tất cả checkbox
         $('#selectAll').click(function() {
             $('.rowCheckbox').prop('checked', $(this).prop('checked'));
         });
 
-        // Xóa các bản ghi đã chọn (cần thêm action DeleteSelectedProducts)
         $('#deleteSelected').click(function() {
             var selectedIds = [];
             $('.rowCheckbox:checked').each(function() {
@@ -260,9 +261,31 @@
             }
         });
 
-        // Chuyển đến trang tạo mới
         $('#createNew').click(function() {
             window.location.href = '@Url.Action("CreateProduct", "Admin")';
+        });
+
+        // Xử lý bộ lọc và tìm kiếm
+        $('#searchButton').click(function() {
+            var status = $('#statusFilter').val();
+            var category = $('#categoryFilter').val();
+            var searchTerm = $('#searchTerm').val();
+
+            $.ajax({
+                url: '@Url.Action("ProductList", "Admin")',
+                type: 'GET',
+                data: {
+                    statusFilter: status,
+                    categoryFilter: category,
+                    searchTerm: searchTerm
+                },
+                success: function(response) {
+                    $('#productlistTable tbody').html($(response).find('#productlistTable tbody').html());
+                },
+                error: function() {
+                    alert('Có lỗi xảy ra khi lọc dữ liệu.');
+                }
+            });
         });
     });
 
