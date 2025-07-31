@@ -14,7 +14,7 @@
     <div class="container">
         <ol class="breadcrumb mb-0 py-2 px-0">
             <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Sản phẩm</li>
+            <li class="breadcrumb-item active" aria-current="page">Sản phẩm</a></li>
         </ol>
     </div>
 </nav>
@@ -67,11 +67,12 @@
                     @foreach (var product in ViewBag.Products)
                     {
                         <div class="col">
-                            <div class="product-card">
+                            <a href="@Url.Action("Index", "ProductDetail", new { id = product.ProductID })" class="product-card">
                                 <img src="/UserFile/Products/@product.ImageLink" alt="@product.Name" class="product-img">
-                                <div class="product-name">@product.Name</div>
-                            </div>
+                            </a>
+                            <div class="product-name">@product.Name</div>
                         </div>
+                        
                     }
                 </div>
                 <!-- Pagination -->
